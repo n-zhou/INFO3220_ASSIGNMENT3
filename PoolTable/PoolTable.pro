@@ -5,7 +5,9 @@
 #-------------------------------------------------
 
 QT       += core gui
-CONFIG += console
+CONFIG += #console
+
+#comment out the console to make it not appear
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
