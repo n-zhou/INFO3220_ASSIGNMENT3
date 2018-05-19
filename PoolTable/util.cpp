@@ -1,6 +1,7 @@
 #include "util.h"
 
 #include <QJsonObject>
+#include <cmath>
 
 
 bool circleRectangleIntersection(const QVector2D &circleCentre, float circleRadius, const QVector2D &rectCenter, const QVector2D &rectDimensions)
