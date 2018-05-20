@@ -1,5 +1,6 @@
 #include <QApplication>
 
+#include "mainwindow.h"
 #include "dialog.h"
 #include "initializer.h"
 #include "poolgame.h"
@@ -7,6 +8,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    MainWindow m;
     Dialog w;
     PoolGame* game = Initializer().createPoolgame("../PoolTable/config.json",&w);
 
@@ -14,7 +16,9 @@ int main(int argc, char *argv[])
     if(!game) return a.exec();
     w.show();
     w.start(game);
-
+    m.addSever();
+    m.addSever();
+    m.addSever();
     return a.exec();
 
 }
