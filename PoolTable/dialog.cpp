@@ -22,6 +22,7 @@ void Dialog::start(PoolGame *game)
     connect(m_timestepTimer,SIGNAL(timeout()),this,SLOT(runSimulationStep()));
     m_framerateTimer->start(1000/fps);
     m_timestepTimer->start(1000*timeStep);
+    connect(this, &Dialog::keyPressed, this, &Dialog::pauseGame);
 }
 
 void Dialog::paintEvent(QPaintEvent *)
@@ -45,6 +46,26 @@ void Dialog::mouseReleaseEvent(QMouseEvent *event)
     emit mouseReleased(event);
 }
 
+void Dialog::keyPressEvent(QKeyEvent *event)
+{
+    emit keyPressed(event);
+}
+
+void Dialog::keyReleaseEvent(QKeyEvent *event)
+{
+    emit keyReleased(event);
+}
+
+void Dialog::pauseGame(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Pause) {
+        if (m_timestepTimer->isActive()) {
+            m_timestepTimer->stop();
+        } else {
+            m_timestepTimer->start();
+        }
+    }
+}
 
 Dialog::~Dialog()
 {
