@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addWidget(m_groupBox);
     widget->setLayout(mainLayout);
-    this->resize(800, 400);
+    this->resize(300, 150);
     this->show();
     this->setCentralWidget(widget);
 
@@ -32,20 +32,9 @@ void MainWindow::createFormGroupBox()
     m_groupBox = new QGroupBox;
     layout = new QFormLayout;
     layout->addRow(new QLabel(tr("Host\t\tPort\t"), new QLabel(tr("\tAction"))));
-    layout->addRow(new QLabel(tr("127.0.0.1\t8080\t")), new QPushButton(tr("join")));
-    layout->addRow(new QLineEdit("127.0.0.1 8080"), new QPushButton("Host"));
+    layout->addRow(new QLabel(tr("127.0.0.1\t8080\t")), new QPushButton(tr("Join")));
+    layout->addRow(new QLabel(tr("127.0.0.1\t8080\t")), new QPushButton("Host"));
     m_groupBox->setLayout(layout);
-}
-
-void MainWindow::addSever()
-{
-    QPushButton *button = new QPushButton;
-    button->setText("Connect");
-    std::stringstream ss;
-    ss << "\t" << layout->count() << "\t\t" << "localhost" << "\t\t" << 0 << "\t\t0ms\t";
-    std::string s = ss.str();
-    QLabel *label = new QLabel(tr(s.c_str()));
-    layout->insertRow(layout->rowCount()-1, label, button);
 }
 
 void MainWindow::newConnection()
@@ -54,13 +43,22 @@ void MainWindow::newConnection()
     socket->write("hello\n");
     socket->flush();
     connect(socket, SIGNAL(readyRead()), this, SLOT(readyRead()));
+    connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
 }
 
 void MainWindow::readyRead()
 {
-    qDebug() << socket->readAll();
+    char buffer[1024];
+    while (socket->canReadLine()) {
+        socket->readLine(buffer, 1024);
+        qDebug() << buffer;
+    }
 }
 
+void MainWindow::disconnected()
+{
+    socket->close();
+}
 MainWindow::~MainWindow()
 {
 

@@ -13,7 +13,6 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 public:
     explicit MainWindow(QWidget *parent = nullptr);
-    void addSever();
     ~MainWindow();
 private:
     void createFormGroupBox();
@@ -27,6 +26,7 @@ signals:
 public slots:
     void newConnection();
     void readyRead();
+    void disconnected();
 
 };
 
