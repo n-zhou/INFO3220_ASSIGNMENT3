@@ -14,6 +14,9 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+    //comment out the below method to remove debugging
+    void test();
 private:
     void createFormGroupBox();
     QGroupBox *m_groupBox;

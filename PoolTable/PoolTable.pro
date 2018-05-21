@@ -32,7 +32,8 @@ SOURCES += main.cpp \
     changeinpoolgame.cpp \
     cueballdecorator.cpp \
     duplicationballdecorator.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    poolgameclient.cpp
 
 HEADERS  += dialog.h \
     poolgame.h \
@@ -53,5 +54,7 @@ HEADERS  += dialog.h \
     balldecorator.h \
     cueballdecorator.h \
     duplicationballdecorator.h \
-    mainwindow.h
+    mainwindow.h \
+    poolgameclient.h \
+    testserializable.h
 
