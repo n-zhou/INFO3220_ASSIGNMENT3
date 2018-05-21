@@ -16,9 +16,6 @@ int main(int argc, char *argv[])
     if(!game) return a.exec();
     w.show();
     w.start(game);
-    m.addSever();
-    m.addSever();
-    m.addSever();
     return a.exec();
 
 }

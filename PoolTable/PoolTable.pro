@@ -4,7 +4,8 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui \
+    network
 CONFIG += #console
 
 #comment out the console to make it not appear
