@@ -10,7 +10,6 @@
 #include <sstream>
 #include <QDebug>
 #include <QTcpSocket>
-#include "testserializable.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
@@ -59,15 +58,6 @@ void MainWindow::disconnected()
 {
     socket->close();
     socket = nullptr;
-}
-
-void MainWindow::test()
-{
-    struct Serial f;
-    f.s = nullptr;
-    f.a = 1;
-    f.y = false;
-
 }
 
 
