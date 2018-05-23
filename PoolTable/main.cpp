@@ -4,6 +4,8 @@
 #include "dialog.h"
 #include "initializer.h"
 #include "poolgame.h"
+#include "server.h"
+#include "client.h"
 
 int main(int argc, char *argv[])
 {
@@ -16,6 +18,12 @@ int main(int argc, char *argv[])
     if(!game) return a.exec();
     w.show();
     w.start(game);
+
+    Server server;
+    Client client;
+    server.startServer();
+    client.startClient();
+    server.test();
     return a.exec();
 
 }

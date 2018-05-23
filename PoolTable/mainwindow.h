@@ -5,8 +5,6 @@
 #include <QPushButton>
 #include <QGroupBox>
 #include <QFormLayout>
-#include <QProgressBar>
-#include <QTcpServer>
 
 class MainWindow : public QMainWindow
 {
@@ -19,15 +17,11 @@ private:
     void createFormGroupBox();
     QGroupBox *m_groupBox;
     QFormLayout *layout;
-    QTcpServer *server;
-    QTcpSocket *socket;
 
 signals:
 
 public slots:
-    void newConnection();
-    void readyRead();
-    void disconnected();
+
 
 };
 

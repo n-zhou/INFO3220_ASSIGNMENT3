@@ -22,46 +22,22 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     this->show();
     this->setCentralWidget(widget);
 
-    server = new QTcpServer(this);
-    server->listen(QHostAddress::Any, 8080);
-    connect(server, SIGNAL(newConnection()), this, SLOT(newConnection()));
 }
 
 void MainWindow::createFormGroupBox()
 {
+    //FIXME
     m_groupBox = new QGroupBox;
     layout = new QFormLayout;
     layout->addRow(new QLabel(tr("Host\t\tPort\t"), new QLabel(tr("\tAction"))));
     layout->addRow(new QLabel(tr("127.0.0.1\t8080\t")), new QPushButton(tr("Host")));
     layout->addRow(new QLabel(tr("127.0.0.1\t8080\t")), new QPushButton(tr("Join")));
-
     m_groupBox->setLayout(layout);
 }
 
-void MainWindow::newConnection()
-{
-    socket = server->nextPendingConnection();
-    connect(socket, SIGNAL(readyRead()), this, SLOT(readyRead()));
-    connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
-}
-
-void MainWindow::readyRead()
-{
-    char buffer[1024];
-    while (socket->canReadLine()) {
-        socket->readLine(buffer, 1024);
-        qDebug() << buffer;
-    }
-}
-
-void MainWindow::disconnected()
-{
-    socket->close();
-    socket = nullptr;
-}
 
 
 MainWindow::~MainWindow()
 {
-    if (server) delete server;
+
 }

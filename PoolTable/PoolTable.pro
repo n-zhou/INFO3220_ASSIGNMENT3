@@ -4,8 +4,8 @@
 #
 #-------------------------------------------------
 
-QT       += core gui \
-    network
+QT       += core gui
+QT       += network
 CONFIG += #console
 
 #comment out the console to make it not appear
@@ -32,7 +32,9 @@ SOURCES += main.cpp \
     changeinpoolgame.cpp \
     cueballdecorator.cpp \
     duplicationballdecorator.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    server.cpp \
+    client.cpp
 
 HEADERS  += dialog.h \
     poolgame.h \
@@ -53,5 +55,7 @@ HEADERS  += dialog.h \
     balldecorator.h \
     cueballdecorator.h \
     duplicationballdecorator.h \
-    mainwindow.h
+    mainwindow.h \
+    server.h \
+    client.h
 
