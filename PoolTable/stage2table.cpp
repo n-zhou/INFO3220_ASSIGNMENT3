@@ -53,7 +53,7 @@ void Stage2Table::deserialize(QDataStream &stream)
     size_t numberOfPockets = 0;
     //read the number of pockets
     stream >> numberOfPockets;
-    for (int i = 0; i < numberOfPockets; ++i) {
+    for (size_t i = 0; i < numberOfPockets; ++i) {
         Pocket *pocket = new Pocket();
         //deserialize the data to make the pocket
         pocket->deserialize(stream);

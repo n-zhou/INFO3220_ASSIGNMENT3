@@ -91,12 +91,33 @@ void CompositeBall::setRadius(float newRadius)
 
 void CompositeBall::serialize(QDataStream &stream)
 {
+    Stage2Ball::serialize(stream);
     stream << m_containedMass << drawChildren;
+    stream << m_containedBalls.size();
+    for (auto b : m_containedBalls) {
+        b->serialize(stream);
+    }
 }
 
 void CompositeBall::deserialize(QDataStream &stream)
 {
+    Stage2Ball::deserialize(stream);
     stream >> m_containedMass >> drawChildren;
+    size_t numberOfBalls;
+    stream >> numberOfBalls;
+    for (size_t i = 0; i < numberOfBalls; ++i) {
+        QString type;
+        stream >> type;
+        Ball *ball;
+        if (type == "composite") {
+            ball = new CompositeBall();
+        } else if (type == "stage2") {
+            ball = new SimpleStage2Ball();
+        }
+        ball->deserialize(stream);
+        m_containedBalls.push_back(ball);
+    }
+
 }
 
 ChangeInPoolGame SimpleStage2Ball::changeVelocity(const QVector2D &deltaV)
@@ -106,3 +127,4 @@ ChangeInPoolGame SimpleStage2Ball::changeVelocity(const QVector2D &deltaV)
     m_velocity += deltaV;
     return ChangeInPoolGame();
 }
+

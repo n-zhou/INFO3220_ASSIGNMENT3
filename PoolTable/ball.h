@@ -57,6 +57,7 @@ public:
 
     virtual void serialize(QDataStream &stream)
     {
+        stream << m_type;
         stream << m_position << m_velocity << m_radius
                 << m_mass << m_colour;
     }
@@ -67,6 +68,8 @@ public:
                 >> m_mass >> m_colour;
     }
 
+    QString type(){return m_type;}
+
 protected:
     QVector2D m_position;
     QVector2D m_velocity;
@@ -74,5 +77,7 @@ protected:
     float m_mass;
     QColor m_colour;
 
+    //type for serialization
+    QString m_type;
 };
 #endif // BALL_H

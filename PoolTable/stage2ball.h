@@ -36,6 +36,7 @@ public:
     CompositeBall():m_containedMass(0)
     {
         Ball::setRadius(-1);
+        Ball::m_type = QString("composite");
     }
     virtual ~CompositeBall();
 
@@ -93,7 +94,7 @@ protected:
 class SimpleStage2Ball : public Stage2Ball
 {
 public:
-    SimpleStage2Ball(){}
+    SimpleStage2Ball(): Stage2Ball(){Ball::m_type = QString("stage2");}
     ChangeInPoolGame changeVelocity(const QVector2D &deltaV);
 };
 
