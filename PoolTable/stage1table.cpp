@@ -21,3 +21,15 @@ ChangeInPoolGame Stage1Table::ballCollision(Ball *b)
 
     return ChangeInPoolGame();
 }
+
+void Stage1Table::serialize(QDataStream &stream)
+{
+    Table::serialize(stream);
+    stream << m_colour;
+}
+
+void Stage1Table::deserialize(QDataStream &stream)
+{
+    Table::deserialize(stream);
+    stream >> m_colour;
+}

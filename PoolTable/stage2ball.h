@@ -18,6 +18,10 @@ public:
 public:
     void draw(QPainter &p);
 
+    virtual void serialize(QDataStream &stream);
+
+    virtual void deserialize(QDataStream &stream);
+
 protected:
     float m_strength;
 };
@@ -71,6 +75,10 @@ public:
      */
     void setRadius(float newRadius);
 
+    void serialize(QDataStream &stream);
+
+    void deserialize(QDataStream &stream);
+
 protected:
     std::vector<Ball*> m_containedBalls;
     float m_containedMass;
@@ -87,7 +95,6 @@ class SimpleStage2Ball : public Stage2Ball
 public:
     SimpleStage2Ball(){}
     ChangeInPoolGame changeVelocity(const QVector2D &deltaV);
-
 };
 
 #endif // STAGE2BALL_H

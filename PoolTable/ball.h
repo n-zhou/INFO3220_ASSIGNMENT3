@@ -4,6 +4,7 @@
 #include <QPainter>
 #include <QVector2D>
 #include <QColor>
+#include <QDataStream>
 
 #include "changeinpoolgame.h"
 
@@ -52,6 +53,18 @@ public:
     virtual bool collidesWith(Ball * other)
     {
         return (this->position()-other->position()).length() < this->radius()+other->radius();
+    }
+
+    virtual void serialize(QDataStream &stream)
+    {
+        stream << m_position << m_velocity << m_radius
+                << m_mass << m_colour;
+    }
+
+    virtual void deserialize(QDataStream &stream)
+    {
+        stream >> m_position >> m_velocity >> m_radius
+                >> m_mass >> m_colour;
     }
 
 protected:

@@ -57,6 +57,7 @@ void Server::readyRead()
     P p;
     stream >> p;
     cout << p.b << " " << p.c << endl;
+    qDebug() << sender << " " << port;
 }
 
 void Server::test()
@@ -66,7 +67,7 @@ void Server::test()
     QByteArray data;
     QDataStream stream(&data, QIODevice::WriteOnly);
     stream << p;
-    server->writeDatagram(data, QHostAddress::LocalHost, 8080);
+    server->writeDatagram(data, QHostAddress::LocalHost, 8081);
 }
 
 Server::~Server()

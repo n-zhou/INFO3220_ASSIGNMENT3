@@ -34,7 +34,17 @@ public:
      * @brief draws a table
      * @param painter used to draw the table
      */
-    virtual void draw(QPainter & p) = 0;
+    virtual void draw(QPainter & p) = 0;\
+
+    virtual void serialize(QDataStream &stream)
+    {
+        stream << m_width << m_height << m_friction;
+    }
+
+    virtual void deserialize(QDataStream &stream)
+    {
+        stream >> m_width >> m_height >> m_friction;
+    }
 
 protected:
     float m_width;

@@ -8,6 +8,18 @@ void Stage2Ball::draw(QPainter &p)
     p.drawEllipse(m_position.toPointF(),m_radius,m_radius);
 }
 
+void Stage2Ball::serialize(QDataStream &stream)
+{
+    Ball::serialize(stream);
+    stream << m_strength;
+}
+
+void Stage2Ball::deserialize(QDataStream &stream)
+{
+    Ball::deserialize(stream);
+    stream >> m_strength;
+}
+
 CompositeBall::~CompositeBall()
 {
     for(Ball * b: m_containedBalls)
@@ -75,6 +87,16 @@ void CompositeBall::setRadius(float newRadius)
             b->setPosition(b->position()*ratio);
         }
     }
+}
+
+void CompositeBall::serialize(QDataStream &stream)
+{
+    stream << m_containedMass << drawChildren;
+}
+
+void CompositeBall::deserialize(QDataStream &stream)
+{
+    stream >> m_containedMass >> drawChildren;
 }
 
 ChangeInPoolGame SimpleStage2Ball::changeVelocity(const QVector2D &deltaV)

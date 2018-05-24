@@ -1,6 +1,8 @@
 #include "client.h"
 
 #include <QDebug>
+#include <QDataStream>
+#include <QVector2D>
 
 Client::Client(QObject *parent) : QObject(parent)
 {
@@ -10,10 +12,13 @@ Client::Client(QObject *parent) : QObject(parent)
 void Client::startClient()
 {
     //hardcoded the port for testing
-    client->connectToHost(QHostAddress::LocalHost, 8080);
+    client->bind(QHostAddress::LocalHost, 8081);
     connect(client, SIGNAL(readyRead()), this, SLOT(readyRead()));
 }
 
+#include <iostream>
+using std::cout;
+using std::endl;
 void Client::readyRead()
 {
     QByteArray buffer;
@@ -21,7 +26,12 @@ void Client::readyRead()
     QHostAddress sender;
     quint16 port;
     client->readDatagram(buffer.data(), buffer.size(), &sender, &port);
-    qDebug() << buffer;
+    QDataStream stream(&buffer, QIODevice::ReadOnly);
+    QVector2D a;
+    double b;
+    bool c;
+    stream >> a >> b >> c;
+    cout << b << " " << c << endl;
     qDebug() << "read from client";
 
 }
