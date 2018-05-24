@@ -12,6 +12,12 @@
 class Table
 {
 public:
+
+    /**
+     * @brief Table  constructor used for serialization
+     */
+    Table() {}
+
     Table(float width, float height,float friction)
         :m_width(width), m_height(height), m_friction(friction){}
     virtual ~Table(){}

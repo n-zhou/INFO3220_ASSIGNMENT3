@@ -25,6 +25,10 @@ public:
      */
     void draw(QPainter &p);
 
+    void serialize(QDataStream &stream);
+
+    void deserialize(QDataStream &stream);
+
 private:
     QColor m_colour;
     std::vector<Pocket*> m_pockets;

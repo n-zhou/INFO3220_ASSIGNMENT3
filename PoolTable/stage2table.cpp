@@ -34,3 +34,29 @@ ChangeInPoolGame Stage2Table::ballCollision(Ball *b)
 
     return ChangeInPoolGame();
 }
+
+void Stage2Table::serialize(QDataStream &stream)
+{
+    Table::serialize(stream);
+    //number of pockets
+    stream << m_pockets.size();
+    for (auto p : m_pockets) {
+        //serialize each pocket
+        p->serialize(stream);
+    }
+
+}
+
+void Stage2Table::deserialize(QDataStream &stream)
+{
+    Table::deserialize(stream);
+    size_t numberOfPockets = 0;
+    //read the number of pockets
+    stream >> numberOfPockets;
+    for (int i = 0; i < numberOfPockets; ++i) {
+        Pocket *pocket = new Pocket();
+        //deserialize the data to make the pocket
+        pocket->deserialize(stream);
+        m_pockets.push_back(pocket);
+    }
+}

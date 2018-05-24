@@ -10,6 +10,14 @@
 class Pocket
 {
 public:
+
+    /**
+     * @brief Pocket default constructor added for stage 3
+     */
+    Pocket()
+        : m_position(), m_radius()
+    {}
+
     Pocket(QVector2D pos, float r)
         :m_position(pos),m_radius(r)
     {}
@@ -18,6 +26,10 @@ public:
     {
         return (circleCentre-m_position).length() + r < m_radius;
     }
+
+    void serialize(QDataStream &stream);
+
+    void deserialize(QDataStream &stream);
 
 private:
     QVector2D m_position;

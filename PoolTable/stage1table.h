@@ -12,6 +12,12 @@
 class Stage1Table : public Table
 {
 public:
+    /**
+     * @brief Stage1Table
+     * @since Stage 3
+     */
+    Stage1Table() : Table() {}
+
     Stage1Table(float width, float height,float friction, const QColor &colour)
         :Table(width,height,friction),m_colour(colour)
     {}
