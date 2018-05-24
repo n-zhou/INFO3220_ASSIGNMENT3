@@ -34,7 +34,8 @@ SOURCES += main.cpp \
     duplicationballdecorator.cpp \
     mainwindow.cpp \
     server.cpp \
-    client.cpp
+    client.cpp \
+    clientdisplay.cpp
 
 HEADERS  += dialog.h \
     poolgame.h \
@@ -57,5 +58,6 @@ HEADERS  += dialog.h \
     duplicationballdecorator.h \
     mainwindow.h \
     server.h \
-    client.h
+    client.h \
+    clientdisplay.h
 
