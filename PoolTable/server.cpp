@@ -37,7 +37,7 @@ void Server::readyRead()
     QDataStream stream(&buffer, QIODevice::ReadOnly);
     QString command;
     stream >> command;
-
+    qDebug() << command;
     QByteArray data;
     QDataStream writeStream(&data, QIODevice::WriteOnly);
     if (command == "INIT") {
