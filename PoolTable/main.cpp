@@ -20,9 +20,6 @@ int main(int argc, char *argv[])
     //w.show();
     //w.start(game);
 
-    ClientDisplay cd;
-    cd.start(game);
-    cd.show();
     Server server;
     Client client;
     server.startServer();

@@ -14,7 +14,17 @@ public:
     ServerDisplay(QWidget *parent = nullptr);
     ~ServerDisplay();
 
+private:
+    PoolGame *m_game = nullptr;
+    QTimer *m_framerateTimer = nullptr;
+    QTimer *m_timestepTimer = nullptr;
+    double m_fps;
+    double m_tps;
+
 signals:
+
+public slots:
+    void runSimulationStep();
 
 };
 

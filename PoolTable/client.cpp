@@ -25,8 +25,7 @@ void Client::readyRead()
     quint16 port;
     client->readDatagram(buffer.data(), buffer.size(), &sender, &port);
     QDataStream stream(&buffer, QIODevice::ReadOnly);
-
-
+    display->synchronize(stream);
 }
 
 void Client::test()

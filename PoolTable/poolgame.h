@@ -19,6 +19,11 @@ class PoolGame
 {
 public:
     /**
+     * @brief PoolGame default constructor added to avoid telescoping in stage3
+     */
+    PoolGame(){}
+
+    /**
      * @brief PoolGame constructor
      * @param m_table a pointer to a Table object, Poolgame takes ownership of this pointer
      * @param balls a vector of pointers to balls, Poolgame takes ownership of all the contained pointers

@@ -9,3 +9,8 @@ ServerDisplay::~ServerDisplay()
 {
 
 }
+
+void ServerDisplay::runSimulationStep()
+{
+    m_game->simulateTimeStep(0.01);
+}

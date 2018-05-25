@@ -1,27 +1,9 @@
 #include "server.h"
 
-#include <QVector2D>
 #include <QDataStream>
+#include "initializer.h"
+#include "poolgame.h"
 
-struct P {
-    QVector2D a;
-    double b;
-    bool c;
-};
-
-QDataStream& operator<<(QDataStream &stream, const P &p)
-{
-    stream << p.a << p.b << p.c;
-    return stream;
-}
-
-QDataStream& operator>>(QDataStream &stream, P &p)
-{
-    stream >> p.a;
-    stream >> p.b;
-    stream >> p.c;
-    return stream;
-}
 
 Server::Server(QObject *parent) : QObject(parent)
 {
@@ -49,20 +31,17 @@ void Server::readyRead()
     QHostAddress sender;
     quint16 port;
     server->readDatagram(buffer.data(), buffer.size(), &sender, &port);
-
     QDataStream stream(&buffer, QIODevice::ReadOnly);
-
-    P p;
-    stream >> p;
-    qDebug() << sender << " " << port;
 }
 
 void Server::test()
 {
-    P p = {QVector2D(100, 150), 0.23, true};
+
     QByteArray data;
     QDataStream stream(&data, QIODevice::WriteOnly);
-    stream << p;
+
+    //stream << p;
+
     server->writeDatagram(data, QHostAddress::LocalHost, 8081);
 }
 

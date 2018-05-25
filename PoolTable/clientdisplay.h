@@ -21,7 +21,7 @@ public:
     ClientDisplay(double fps = 60, double tps = 0.01, QWidget *parent = nullptr);
     ~ClientDisplay();
 
-    void start(PoolGame *game);
+    void start(QDataStream &stream);
 
 protected:
     void paintEvent(QPaintEvent *);
@@ -32,8 +32,6 @@ private:
     QTimer *m_timestepTimer = nullptr;
     double m_fps;
     double m_tps;
-
-    PoolGame* reSync(QDataStream &stream);
 
 signals:
 

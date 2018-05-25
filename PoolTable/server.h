@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QUdpSocket>
 
+#include "serverdisplay.h"
+
 class Server : public QObject
 {
     Q_OBJECT
@@ -19,6 +21,7 @@ public:
 
 private:
     QUdpSocket *server = nullptr;
+    ServerDisplay *display = nullptr;
 
 signals:
 
