@@ -6,6 +6,7 @@
 #include "poolgame.h"
 #include "server.h"
 #include "client.h"
+#include "clientdisplay.h"
 
 int main(int argc, char *argv[])
 {
@@ -15,10 +16,13 @@ int main(int argc, char *argv[])
     PoolGame* game = Initializer().createPoolgame("../PoolTable/config.json",&w);
 
     //if the returned game is a nullptr the json file couldn't be found or was invalid
-    if(!game) return a.exec();
-    w.show();
-    w.start(game);
+    //if(!game) return a.exec();
+    //w.show();
+    //w.start(game);
 
+    ClientDisplay cd;
+    cd.start(game);
+    cd.show();
     Server server;
     Client client;
     server.startServer();

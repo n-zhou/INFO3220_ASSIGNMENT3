@@ -38,6 +38,7 @@ ChangeInPoolGame Stage2Table::ballCollision(Ball *b)
 void Stage2Table::serialize(QDataStream &stream)
 {
     Table::serialize(stream);
+    stream << m_colour;
     //number of pockets
     stream << m_pockets.size();
     for (auto p : m_pockets) {
@@ -50,6 +51,7 @@ void Stage2Table::serialize(QDataStream &stream)
 void Stage2Table::deserialize(QDataStream &stream)
 {
     Table::deserialize(stream);
+    stream >> m_colour;
     size_t numberOfPockets = 0;
     //read the number of pockets
     stream >> numberOfPockets;

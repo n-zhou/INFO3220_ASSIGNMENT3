@@ -1,6 +1,7 @@
 #include "poolgame.h"
 #include <cmath>
-
+#include "stage2table.h"
+#include "stage2ball.h"
 
 PoolGame::~PoolGame()
 {
@@ -102,4 +103,40 @@ ChangeInPoolGame PoolGame::collide(Ball *b1, Ball *b2)
      ChangeInPoolGame changeFromB1 = b1->changeVelocity(mR * (vB - root) * collisionVector);
      ChangeInPoolGame changeFromB2 = b2->changeVelocity((root - vB) * collisionVector);
      return changeFromB1.merge(changeFromB2);
+}
+
+QDataStream& operator<<(QDataStream& stream, const PoolGame &game)
+{
+    game.m_table->serialize(stream);
+    stream << game.m_balls.size();
+    for (auto b : game.m_balls)
+        b->serialize(stream);
+    return stream;
+}
+
+QDataStream& operator>>(QDataStream& stream, PoolGame &game)
+{
+
+    delete game.m_table;
+    game.m_table = new Stage2Table();
+    game.m_table->deserialize(stream);
+    for (auto b : game.m_balls) delete b;
+    game.m_balls.clear();
+    size_t numberOfBalls = 0;
+    stream >> numberOfBalls;
+    for (size_t i = 0; i < numberOfBalls; ++i) {
+        Ball *ball;
+        QString type;
+        stream >> type;
+        if (type == "composite") {
+            ball = new CompositeBall();
+        } else if (type == "stage2") {
+            ball = new Stage2Ball();
+        } else {
+            throw new std::invalid_argument("unexpected type");
+        }
+        ball->deserialize(stream);
+        game.m_balls.push_back(ball);
+    }
+    return stream;
 }

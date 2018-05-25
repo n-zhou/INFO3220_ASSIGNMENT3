@@ -4,6 +4,7 @@
 #include <vector>
 #include <QPainter>
 #include <QSize>
+#include <QDataStream>
 
 #include "table.h"
 #include "ball.h"
@@ -46,6 +47,9 @@ public:
      */
     QSize size(){return QSize(m_table->width(),m_table->height());}
 
+    friend QDataStream& operator<<(QDataStream &stream, const PoolGame &game);
+
+    friend QDataStream& operator>>(QDataStream &stream, PoolGame &game);
 private:
     /**
      * @brief collide two balls if they are in contact
@@ -59,5 +63,9 @@ private:
     Table * m_table;
     std::vector<Ball*> m_balls;
 };
+
+QDataStream& operator<<(QDataStream &stream, const PoolGame &game);
+
+QDataStream& operator>>(QDataStream &stream, PoolGame &game);
 
 #endif // POOLGAME_H

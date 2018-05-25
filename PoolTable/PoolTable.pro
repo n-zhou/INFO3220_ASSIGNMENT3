@@ -36,7 +36,8 @@ SOURCES += main.cpp \
     server.cpp \
     client.cpp \
     clientdisplay.cpp \
-    stage3factory.cpp
+    stage3factory.cpp \
+    serverdisplay.cpp
 
 HEADERS  += dialog.h \
     poolgame.h \
@@ -61,5 +62,6 @@ HEADERS  += dialog.h \
     server.h \
     client.h \
     clientdisplay.h \
-    stage3factory.h
+    stage3factory.h \
+    serverdisplay.h
 

@@ -7,6 +7,7 @@
 Client::Client(QObject *parent) : QObject(parent)
 {
     client = new QUdpSocket(this);
+    display = new ClientDisplay();
 }
 
 void Client::startClient()
@@ -16,9 +17,6 @@ void Client::startClient()
     connect(client, SIGNAL(readyRead()), this, SLOT(readyRead()));
 }
 
-#include <iostream>
-using std::cout;
-using std::endl;
 void Client::readyRead()
 {
     QByteArray buffer;
@@ -27,12 +25,7 @@ void Client::readyRead()
     quint16 port;
     client->readDatagram(buffer.data(), buffer.size(), &sender, &port);
     QDataStream stream(&buffer, QIODevice::ReadOnly);
-    QVector2D a;
-    double b;
-    bool c;
-    stream >> a >> b >> c;
-    cout << b << " " << c << endl;
-    qDebug() << "read from client";
+
 
 }
 
@@ -44,4 +37,5 @@ void Client::test()
 Client::~Client()
 {
     if (client) delete client;
+    if (display) delete display;
 }

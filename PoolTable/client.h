@@ -5,6 +5,8 @@
 #include <QUdpSocket>
 #include <QTcpSocket>
 
+#include "clientdisplay.h"
+
 class Client : public QObject
 {
     Q_OBJECT
@@ -17,7 +19,8 @@ public:
     void test();
 
 private:
-    QUdpSocket *client;
+    QUdpSocket *client = nullptr;
+    ClientDisplay *display = nullptr;
 
 signals:
 

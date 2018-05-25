@@ -12,6 +12,8 @@
 class Stage2Table : public Table
 {
 public:
+    Stage2Table() : Table() {}
+
     Stage2Table(float width, float height,float friction, const QColor &colour, std::vector<Pocket*> pockets)
         :Table(width,height,friction),m_colour(colour),m_pockets(pockets)
     {}

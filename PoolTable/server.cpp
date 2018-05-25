@@ -2,6 +2,7 @@
 
 #include <QVector2D>
 #include <QDataStream>
+
 struct P {
     QVector2D a;
     double b;
@@ -40,9 +41,6 @@ void Server::stopServer()
     delete this;
 }
 
-#include <iostream>
-using std::cout;
-using std::endl;
 void Server::readyRead()
 {
 
@@ -56,14 +54,12 @@ void Server::readyRead()
 
     P p;
     stream >> p;
-    cout << p.b << " " << p.c << endl;
     qDebug() << sender << " " << port;
 }
 
 void Server::test()
 {
     P p = {QVector2D(100, 150), 0.23, true};
-    cout << p.b << " " << p.c << endl;
     QByteArray data;
     QDataStream stream(&data, QIODevice::WriteOnly);
     stream << p;
