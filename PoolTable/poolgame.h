@@ -65,7 +65,7 @@ private:
     ChangeInPoolGame collide(Ball *b1, Ball *b2);
 
 
-    Table * m_table;
+    Table * m_table = nullptr;
     std::vector<Ball*> m_balls;
 };
 

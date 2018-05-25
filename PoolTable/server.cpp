@@ -43,7 +43,7 @@ void Server::readyRead()
     if (command == "INIT") {
         writeStream << QString("INIT");
         display->serializeGame(writeStream);
-        server->writeDatagram(data, QHostAddress::LocalHost, 8081);
+        server->writeDatagram(data, QHostAddress::Broadcast, 8081);
     }
 }
 

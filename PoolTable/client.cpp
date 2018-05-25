@@ -19,7 +19,7 @@ void Client::startClient()
     QByteArray buffer;
     QDataStream stream(&buffer, QIODevice::WriteOnly);
     stream << QString("INIT");
-    client->writeDatagram(buffer, QHostAddress::LocalHost, 8080);
+    client->writeDatagram(buffer, QHostAddress::Broadcast, 8080);
 }
 
 void Client::readyRead()

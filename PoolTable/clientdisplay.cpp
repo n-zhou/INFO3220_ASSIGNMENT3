@@ -21,7 +21,6 @@ void ClientDisplay::start(QDataStream &stream)
     stream >> *m_game;
     this->setMinimumSize(m_game->size());
     this->resize(m_game->size());
-    qDebug() << m_game->size();
     connect(m_framerateTimer,SIGNAL(timeout()),this,SLOT(update()));
     connect(m_timestepTimer, SIGNAL(timeout()),this, SLOT(runSimulationStep()));
     m_framerateTimer->start(1000/m_fps);
