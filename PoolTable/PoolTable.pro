@@ -65,3 +65,6 @@ HEADERS  += dialog.h \
     stage3factory.h \
     serverdisplay.h
 
+DISTFILES += \
+    config.json
+

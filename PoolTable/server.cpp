@@ -5,9 +5,10 @@
 #include "poolgame.h"
 
 
-Server::Server(QObject *parent) : QObject(parent)
+Server::Server(QObject *parent) : QObject(parent),
+    server(new QUdpSocket(this)), display(new ServerDisplay())
 {
-    server = new QUdpSocket(this);
+
 }
 
 void Server::startServer()
@@ -15,6 +16,7 @@ void Server::startServer()
     //we hard code the port for testing purposes
     server->bind(QHostAddress::LocalHost, 8080);
     connect(server, SIGNAL(readyRead()), this, SLOT(readyRead()));
+    display->start();
 }
 
 void Server::stopServer()
@@ -31,18 +33,18 @@ void Server::readyRead()
     QHostAddress sender;
     quint16 port;
     server->readDatagram(buffer.data(), buffer.size(), &sender, &port);
+    qDebug() << sender << port;
     QDataStream stream(&buffer, QIODevice::ReadOnly);
-}
-
-void Server::test()
-{
+    QString command;
+    stream >> command;
 
     QByteArray data;
-    QDataStream stream(&data, QIODevice::WriteOnly);
-
-    //stream << p;
-
-    server->writeDatagram(data, QHostAddress::LocalHost, 8081);
+    QDataStream writeStream(&data, QIODevice::WriteOnly);
+    if (command == "INIT") {
+        writeStream << QString("INIT");
+        display->serializeGame(writeStream);
+        server->writeDatagram(data, QHostAddress::LocalHost, 8081);
+    }
 }
 
 Server::~Server()

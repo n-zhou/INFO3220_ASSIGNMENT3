@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QWidget>
 #include <QDialog>
+#include <QTimer>
+#include <QDataStream>
 
 #include "poolgame.h"
 
@@ -11,8 +13,12 @@ class ServerDisplay : public QDialog
 {
     Q_OBJECT
 public:
-    ServerDisplay(QWidget *parent = nullptr);
+    ServerDisplay(double fps = 60, double tps = 0.01, QWidget *parent = nullptr);
     ~ServerDisplay();
+
+    void start();
+
+    QDataStream& serializeGame(QDataStream &stream);
 
 private:
     PoolGame *m_game = nullptr;
@@ -20,6 +26,9 @@ private:
     QTimer *m_timestepTimer = nullptr;
     double m_fps;
     double m_tps;
+
+protected:
+    void paintEvent(QPaintEvent *);
 
 signals:
 

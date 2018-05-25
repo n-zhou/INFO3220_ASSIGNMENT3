@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     MainWindow m;
     Dialog w;
-    PoolGame* game = Initializer().createPoolgame("../PoolTable/config.json",&w);
+    //PoolGame* game = Initializer().createPoolgame("../PoolTable/config.json",&w);
 
     //if the returned game is a nullptr the json file couldn't be found or was invalid
     //if(!game) return a.exec();
@@ -21,10 +21,9 @@ int main(int argc, char *argv[])
     //w.start(game);
 
     Server server;
-    Client client;
     server.startServer();
+    Client client;
     client.startClient();
-    server.test();
     return a.exec();
 
 }
