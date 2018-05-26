@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QUdpSocket>
+#include <QPair>
 
 #include "serverdisplay.h"
 
@@ -20,6 +21,7 @@ public:
 private:
     QUdpSocket *server = nullptr;
     ServerDisplay *display = nullptr;
+    QPair<QHostAddress, quint16> pair;
 
 signals:
 
