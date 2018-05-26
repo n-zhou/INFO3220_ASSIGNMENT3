@@ -17,10 +17,6 @@ void Client::startClient()
     while(!client->bind(QHostAddress("192.168.0." + x++), 8081));
     connect(client, SIGNAL(readyRead()), this, SLOT(readyRead()));
 
-    QByteArray buffer;
-    QDataStream stream(&buffer, QIODevice::WriteOnly);
-    stream << QString("INIT");
-    client->writeDatagram(buffer, QHostAddress("192.168.0.3"), 8080);
 }
 
 void Client::readyRead()
@@ -30,7 +26,7 @@ void Client::readyRead()
     QHostAddress sender;
     quint16 port;
     client->readDatagram(buffer.data(), buffer.size(), &sender, &port);
-    qDebug() << sender << port;
+    qDebug() << "Client Reading From:" << sender << port;
     QDataStream stream(&buffer, QIODevice::ReadOnly);
     QString command;
     stream >> command;
@@ -38,7 +34,16 @@ void Client::readyRead()
     if (command == "INIT") {
         display->start(stream);
     } else if (command == "BROADCAST") {
-        qDebug() << "broadcast recieved";
+        static int done = 0;
+        if (!done) {
+            QByteArray buffer2;
+            QDataStream stream2(&buffer2, QIODevice::WriteOnly);
+            stream2 << QString("INIT");
+            client->writeDatagram(buffer2, sender, port);
+            ++done;
+        }
+        return;
+
     }
 
 }

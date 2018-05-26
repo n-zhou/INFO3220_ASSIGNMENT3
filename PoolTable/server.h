@@ -15,9 +15,12 @@ public:
     explicit Server(QObject *parent = nullptr);
     ~Server();
 
+    /**
+     * @brief startServer starts the server on 192.168.0.x where x is the digit of the last
+     * address which we can bind the udp socket to.
+     */
     void startServer();
 
-    void test();
 
 private:
     QUdpSocket *server = nullptr;
@@ -28,7 +31,16 @@ private:
 signals:
 
 public slots:
+    /**
+     * @brief readyRead should be fired whenever there is data available
+     * to read from the socket.
+     */
     void readyRead();
+
+    /**
+     * @brief broadcast actually performs a multicast to 192.168.0.x
+     * where x is [0, 100) on port 8081.
+     */
     void broadcast();
 };
 

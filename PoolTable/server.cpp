@@ -34,7 +34,7 @@ void Server::readyRead()
     QHostAddress sender;
     quint16 port;
     server->readDatagram(buffer.data(), buffer.size(), &sender, &port);
-    qDebug() << sender << port;
+    qDebug() << "Server Reading from:" << sender << port;
     QDataStream stream(&buffer, QIODevice::ReadOnly);
     QString command;
     stream >> command;

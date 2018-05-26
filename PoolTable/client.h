@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QUdpSocket>
 #include <QTcpSocket>
+#include <QPair>
 
 #include "clientdisplay.h"
 
