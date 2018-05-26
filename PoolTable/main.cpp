@@ -22,8 +22,8 @@ int main(int argc, char *argv[])
 
     Server server;
     server.startServer();
-    //Client client;
-    //client.startClient();
+    Client client;
+    client.startClient();
     return a.exec();
 
 }

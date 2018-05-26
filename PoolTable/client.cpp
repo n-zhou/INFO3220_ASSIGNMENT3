@@ -13,13 +13,14 @@ Client::Client(QObject *parent) : QObject(parent)
 void Client::startClient()
 {
     //hardcoded the port for testing
-    client->bind(QHostAddress("192.168.0.7"), 8080);
+    int x = 0;
+    while(!client->bind(QHostAddress("192.168.0." + x++), 8081));
     connect(client, SIGNAL(readyRead()), this, SLOT(readyRead()));
 
     QByteArray buffer;
     QDataStream stream(&buffer, QIODevice::WriteOnly);
     stream << QString("INIT");
-    client->writeDatagram(buffer, QHostAddress("192.168.0.6"), 8080);
+    client->writeDatagram(buffer, QHostAddress("192.168.0.3"), 8080);
 }
 
 void Client::readyRead()
@@ -29,14 +30,15 @@ void Client::readyRead()
     QHostAddress sender;
     quint16 port;
     client->readDatagram(buffer.data(), buffer.size(), &sender, &port);
+    qDebug() << sender << port;
     QDataStream stream(&buffer, QIODevice::ReadOnly);
     QString command;
     stream >> command;
     qDebug() << command;
     if (command == "INIT") {
         display->start(stream);
-    } else if (command == "YIELD") {
-        //give control of white ball back
+    } else if (command == "BROADCAST") {
+        qDebug() << "broadcast recieved";
     }
 
 }

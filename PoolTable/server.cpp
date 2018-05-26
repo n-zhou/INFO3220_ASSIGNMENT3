@@ -7,7 +7,7 @@
 
 
 Server::Server(QObject *parent) : QObject(parent),
-    server(new QUdpSocket(this)), display(new ServerDisplay())
+    server(new QUdpSocket(this)), display(new ServerDisplay()), broadcastTimer(new QTimer())
 {
 
 }
@@ -16,10 +16,13 @@ Server::Server(QObject *parent) : QObject(parent),
 void Server::startServer()
 {
     //we hard code the port for testing purposes
-    server->bind(QHostAddress("192.168.0.6"), 8080);
+    int x = 0;
+    while(!server->bind(QHostAddress("192.168.0." + x++), 8080));
     qDebug() << connect(server, SIGNAL(readyRead()), this, SLOT(readyRead()));
     display->start();
     pair = QPair<QHostAddress, quint16>(QHostAddress("127.0.0.1"), 6969);
+    broadcastTimer->start(2000);
+    connect(broadcastTimer, SIGNAL(timeout()), this, SLOT(broadcast()));
 }
 
 void Server::readyRead()
@@ -39,6 +42,7 @@ void Server::readyRead()
     QByteArray data;
     QDataStream writeStream(&data, QIODevice::WriteOnly);
     if (command == "INIT") {
+        //SENDS THE DATA OF THE GAME TO THE CLIENT
         writeStream << QString("INIT");
         display->serializeGame(writeStream);
         server->writeDatagram(data, sender, port);
@@ -48,7 +52,19 @@ void Server::readyRead()
     }
 }
 
+void Server::broadcast()
+{
+    for (int i = 0; i < 100; ++i) {
+        QByteArray buffer;
+        QDataStream stream(&buffer, QIODevice::WriteOnly);
+        stream << QString("BROADCAST");
+        server->writeDatagram(buffer, QHostAddress(QString("192.168.0.3" + i)), 8081);
+    }
+}
+
 Server::~Server()
 {
     if (server) delete server;
 }
+
+
