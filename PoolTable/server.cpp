@@ -1,6 +1,7 @@
 #include "server.h"
 
 #include <QDataStream>
+#include <QByteArray>
 #include "initializer.h"
 #include "poolgame.h"
 
@@ -11,11 +12,12 @@ Server::Server(QObject *parent) : QObject(parent),
 
 }
 
+#include <QDebug>
 void Server::startServer()
 {
     //we hard code the port for testing purposes
-    server->bind(QHostAddress::LocalHost, 8080);
-    connect(server, SIGNAL(readyRead()), this, SLOT(readyRead()));
+    server->bind(QHostAddress("192.168.0.6"), 8080);
+    qDebug() << connect(server, SIGNAL(readyRead()), this, SLOT(readyRead()));
     display->start();
 }
 
@@ -43,7 +45,7 @@ void Server::readyRead()
     if (command == "INIT") {
         writeStream << QString("INIT");
         display->serializeGame(writeStream);
-        server->writeDatagram(data, QHostAddress::Broadcast, 8081);
+        server->writeDatagram(data, QHostAddress("192.168.0.7"), 8080);
     }
 }
 

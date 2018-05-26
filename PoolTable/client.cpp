@@ -13,13 +13,13 @@ Client::Client(QObject *parent) : QObject(parent)
 void Client::startClient()
 {
     //hardcoded the port for testing
-    client->bind(QHostAddress::LocalHost, 8081);
+    client->bind(QHostAddress("192.168.0.7"), 8080);
     connect(client, SIGNAL(readyRead()), this, SLOT(readyRead()));
 
     QByteArray buffer;
     QDataStream stream(&buffer, QIODevice::WriteOnly);
     stream << QString("INIT");
-    client->writeDatagram(buffer, QHostAddress::Broadcast, 8080);
+    client->writeDatagram(buffer, QHostAddress("192.168.0.6"), 8080);
 }
 
 void Client::readyRead()
