@@ -7,7 +7,8 @@
 
 
 Server::Server(QObject *parent) : QObject(parent),
-    server(new QUdpSocket(this)), display(new ServerDisplay()), broadcastTimer(new QTimer())
+    server(new QUdpSocket(this)), display(new ServerDisplay()),
+    broadcastTimer(new QTimer())
 {
 
 }
@@ -21,7 +22,7 @@ void Server::startServer()
     qDebug() << connect(server, SIGNAL(readyRead()), this, SLOT(readyRead()));
     display->start();
     pair = QPair<QHostAddress, quint16>(QHostAddress("127.0.0.1"), 6969);
-    broadcastTimer->start(2000);
+    broadcastTimer->start(5000);
     connect(broadcastTimer, SIGNAL(timeout()), this, SLOT(broadcast()));
 }
 
@@ -47,8 +48,8 @@ void Server::readyRead()
         display->serializeGame(writeStream);
         server->writeDatagram(data, sender, port);
         pair = QPair<QHostAddress, quint16>(sender, port);
-    } else if (command == "something else") {
-
+    } else if (command == "BROADCAST") {
+        qDebug() << "we wrote back to ourselves like idiots";
     }
 }
 
@@ -58,7 +59,7 @@ void Server::broadcast()
     QDataStream stream(&buffer, QIODevice::WriteOnly);
     stream << QString("BROADCAST");
     for (int i = 0; i < 100; ++i) {
-        server->writeDatagram(buffer, QHostAddress(QString("192.168.0.3" + i)), 8081);
+        server->writeDatagram(buffer, QHostAddress(QString("192.168.0.").append(i)), 8081);
     }
 }
 
