@@ -21,12 +21,6 @@ void Server::startServer()
     display->start();
 }
 
-void Server::stopServer()
-{
-    //hahaha lol
-    delete this;
-}
-
 void Server::readyRead()
 {
 
@@ -45,7 +39,7 @@ void Server::readyRead()
     if (command == "INIT") {
         writeStream << QString("INIT");
         display->serializeGame(writeStream);
-        server->writeDatagram(data, QHostAddress("192.168.0.7"), 8080);
+        server->writeDatagram(data, QHostAddress("192.168.0.2"), 8080);
     }
 }
 

@@ -15,8 +15,6 @@ public:
 
     void startServer();
 
-    void stopServer();
-
     void test();
 
 private:
