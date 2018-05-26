@@ -3,8 +3,9 @@
 
 #include <QObject>
 #include <QUdpSocket>
-#include <QPair>
 #include <QTimer>
+#include <QSet>
+#include <QPair>
 
 #include "serverdisplay.h"
 
@@ -26,7 +27,7 @@ private:
     QUdpSocket *server = nullptr;
     ServerDisplay *display = nullptr;
     QTimer *broadcastTimer = nullptr;
-    QPair<QHostAddress, quint16> pair;
+    QSet<QPair<QHostAddress, quint16>> clientSet;
 
 signals:
 

@@ -21,7 +21,6 @@ void Server::startServer()
     while(!server->bind(QHostAddress("192.168.0." + x++), 8080));
     qDebug() << connect(server, SIGNAL(readyRead()), this, SLOT(readyRead()));
     display->start();
-    pair = QPair<QHostAddress, quint16>(QHostAddress("127.0.0.1"), 6969);
     broadcastTimer->start(5000);
     connect(broadcastTimer, SIGNAL(timeout()), this, SLOT(broadcast()));
 }
@@ -43,13 +42,15 @@ void Server::readyRead()
     QByteArray data;
     QDataStream writeStream(&data, QIODevice::WriteOnly);
     if (command == "INIT") {
+        clientSet.insert(qMakePair(sender, port));
         //SENDS THE DATA OF THE GAME TO THE CLIENT
         writeStream << QString("INIT");
         display->serializeGame(writeStream);
         server->writeDatagram(data, sender, port);
-        pair = QPair<QHostAddress, quint16>(sender, port);
     } else if (command == "BROADCAST") {
         qDebug() << "we wrote back to ourselves like idiots";
+    } else if (command == "STOP") {
+        clientSet.remove(qMakePair(sender, port));
     }
 }
 
