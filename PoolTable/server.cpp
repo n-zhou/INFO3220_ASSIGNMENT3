@@ -54,10 +54,10 @@ void Server::readyRead()
 
 void Server::broadcast()
 {
+    QByteArray buffer;
+    QDataStream stream(&buffer, QIODevice::WriteOnly);
+    stream << QString("BROADCAST");
     for (int i = 0; i < 100; ++i) {
-        QByteArray buffer;
-        QDataStream stream(&buffer, QIODevice::WriteOnly);
-        stream << QString("BROADCAST");
         server->writeDatagram(buffer, QHostAddress(QString("192.168.0.3" + i)), 8081);
     }
 }
