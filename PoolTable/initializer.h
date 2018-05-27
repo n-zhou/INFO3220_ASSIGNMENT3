@@ -13,7 +13,7 @@ class Dialog;
 class Initializer
 {
 public:
-    Initializer(){}
+    Initializer() : m_stage3(false) {}
 
     /**
      * @brief creates a Poolgame from a config file
@@ -22,6 +22,15 @@ public:
      */
     PoolGame *createPoolgame(const std::string &configFilePath, Dialog *parent);
 
+    /**
+     * @brief isStage3
+     * @return <tt>true</tt> if the config file is a stage 3 file
+     * else it returns <tt>false</tt>.
+     */
+    bool isStage3() const {return m_stage3;}
+
+private:
+    bool m_stage3;
 };
 
 #endif // INITIALIZER_H

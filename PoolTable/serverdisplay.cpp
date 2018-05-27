@@ -17,6 +17,7 @@ ServerDisplay::~ServerDisplay()
 #include <QFile>
 void ServerDisplay::start()
 {
+    //get rid of this
     m_game = Initializer().createPoolgame("../PoolTable/config.json", nullptr);
     this->setMinimumSize(m_game->size());
     this->resize(m_game->size());

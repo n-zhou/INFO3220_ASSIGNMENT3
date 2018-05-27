@@ -16,11 +16,7 @@ public:
     explicit Server(QObject *parent = nullptr);
     ~Server();
 
-    /**
-     * @brief startServer starts the server on 192.168.0.x where x is the digit of the last
-     * address which we can bind the udp socket to.
-     */
-    void startServer();
+
 
 
 private:
@@ -43,6 +39,12 @@ public slots:
      * where x is [0, 100) on port 8081.
      */
     void broadcast();
+
+    /**
+     * @brief startServer starts the server on 192.168.0.x where x is the digit of the last
+     * address which we can bind the udp socket to.
+     */
+    void startServer();
 };
 
 #endif // SERVER_H

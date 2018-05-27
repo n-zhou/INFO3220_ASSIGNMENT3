@@ -34,23 +34,19 @@ void Client::readyRead()
     if (command == "INIT") {
         display->start(stream);
     } else if (command == "BROADCAST") {
-        static int done = 0;
-        if (!done) {
-            QByteArray buffer2;
-            QDataStream stream2(&buffer2, QIODevice::WriteOnly);
-            stream2 << QString("INIT");
-            client->writeDatagram(buffer2, sender, port);
-            ++done;
-        }
-        return;
-
+        pair = qMakePair(sender, port);
     }
 
 }
 
-void Client::test()
+void Client::joinGame()
 {
-
+    qDebug() << "button pressed";
+    QByteArray buffer;
+    QDataStream stream(&buffer, QIODevice::WriteOnly);
+    stream << QString("INIT");
+    qDebug() << pair.first << pair.second;
+    client->writeDatagram(buffer, pair.first, pair.second);
 }
 
 Client::~Client()

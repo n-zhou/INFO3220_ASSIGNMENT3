@@ -5,23 +5,42 @@
 #include <QPushButton>
 #include <QGroupBox>
 #include <QFormLayout>
+#include "dialog.h"
+#include "server.h"
+#include "client.h"
+#include "initializer.h"
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(Initializer &init, QWidget *parent = nullptr);
     ~MainWindow();
 
 private:
+    /**
+     * @brief createFormGroupBox creates the gui of the mainwindow
+     */
     void createFormGroupBox();
-    QGroupBox *m_groupBox;
-    QFormLayout *layout;
+
+    QWidget *widget = nullptr;
+    QGroupBox *m_groupBox = nullptr;
+    QFormLayout *layout = nullptr;
+
+    //stuff we don't need to delete
+    /**
+     * @brief w the dialog box used to display games that are less than stage3
+     */
+    Dialog w;
+
+    Server server;
+    Client client;
+
 
 signals:
 
 public slots:
-
+    void addNewServer();
 
 };
 

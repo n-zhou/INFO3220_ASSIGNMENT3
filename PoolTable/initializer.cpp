@@ -46,6 +46,7 @@ PoolGame *Initializer::createPoolgame(const std::string &configFilePath, Dialog 
     AbstractFactory *factory;
     if (config["stage3"].toBool())
     {
+        m_stage3 = true;
         factory = new Stage3Factory();
     }
     else if(config["stage2"].toBool())

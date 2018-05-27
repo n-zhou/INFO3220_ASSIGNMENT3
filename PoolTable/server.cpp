@@ -4,7 +4,7 @@
 #include <QByteArray>
 #include "initializer.h"
 #include "poolgame.h"
-
+#include <QDebug>
 
 Server::Server(QObject *parent) : QObject(parent),
     server(new QUdpSocket(this)), display(new ServerDisplay()),
@@ -13,15 +13,16 @@ Server::Server(QObject *parent) : QObject(parent),
 
 }
 
-#include <QDebug>
+
 void Server::startServer()
 {
+    qDebug() << "Button Presssed";
     //we hard code the port for testing purposes
     int x = 0;
     while(!server->bind(QHostAddress("192.168.0." + x++), 8080));
     qDebug() << connect(server, SIGNAL(readyRead()), this, SLOT(readyRead()));
     display->start();
-    broadcastTimer->start(5000);
+    broadcastTimer->start(2500);
     connect(broadcastTimer, SIGNAL(timeout()), this, SLOT(broadcast()));
 }
 
@@ -59,7 +60,7 @@ void Server::broadcast()
     QByteArray buffer;
     QDataStream stream(&buffer, QIODevice::WriteOnly);
     stream << QString("BROADCAST");
-    for (int i = 0; i < 100; ++i) {
+    for (int i = 0; i < 1000; ++i) {
         server->writeDatagram(buffer, QHostAddress(QString("192.168.0.").append(i)), 8081);
     }
 }

@@ -17,16 +17,17 @@ public:
 
     void startClient();
 
-    void test();
-
 private:
     QUdpSocket *client = nullptr;
     ClientDisplay *display = nullptr;
+
+    QPair<QHostAddress, quint16> pair;
 
 signals:
 
 public slots:
     void readyRead();
+    void joinGame();
 };
 
 #endif // CLIENT_H
