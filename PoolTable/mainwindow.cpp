@@ -40,7 +40,7 @@ void MainWindow::createFormGroupBox()
     connect(hostButton, &QPushButton::pressed, &server, &Server::startServer);
     layout->addRow(new QLabel(tr("Host a new game?")), hostButton);
     QPushButton *button = new QPushButton("Join");
-    connect(button, &QPushButton::pressed, &client, &Client::joinGame);
+    connect(button, SIGNAL(pressed()), &client, SLOT(joinGame()));
     layout->addRow(new QLabel(tr("Some Game")), button);
 
     m_groupBox->setLayout(layout);

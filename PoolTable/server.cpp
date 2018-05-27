@@ -17,6 +17,7 @@ Server::Server(QObject *parent) : QObject(parent),
 void Server::startServer()
 {
     qDebug() << "Button Presssed";
+    if (server->isValid()) return;
     //we hard code the port for testing purposes
     int x = 0;
     while(!server->bind(QHostAddress("192.168.0." + x++), 8080));
