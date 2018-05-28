@@ -13,9 +13,7 @@ Client::Client(QObject *parent) : QObject(parent)
 void Client::startClient()
 {
     if (client->isValid()) return;
-    //hardcoded the port for testing
-    int x = 0;
-    while(!client->bind(QHostAddress("192.168.0." + x++), 8081));
+    client->bind(8081);
     connect(client, SIGNAL(readyRead()), this, SLOT(readyRead()));
 
 }

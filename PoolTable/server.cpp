@@ -19,9 +19,25 @@ void Server::startServer()
     qDebug() << "Button Presssed";
     if (server->isValid()) return;
     //we hard code the port for testing purposes
-    int x = 0;
-    while(!server->bind(QHostAddress("192.168.0." + x++), 8080));
-    qDebug() << connect(server, SIGNAL(readyRead()), this, SLOT(readyRead()));
+    quint16 x = 1;
+    //while(!server->bind(QHostAddress(QString("192.168.0.") + QString::number(x++)),
+      //                  8080));
+    for (x = 0; x <= 255; ++x) {
+        qDebug() << QString("192.168.0.") + QString::number(x);
+        qDebug() << server->state();
+        if (server->bind(QHostAddress(QString("192.168.0.") + QString::number(x)),
+                         8080)) break;
+    }
+    if (server->state() == QAbstractSocket::UnconnectedState) {
+        for (x = 0; x <= 255; ++x) {
+            qDebug() << QString("192.168.0.") + QString::number(x);
+            qDebug() << server->state();
+            if (server->bind(QHostAddress(QString("10.19.203.") + QString::number(x)),
+                             8080)) break;
+        }
+    }
+    if (server->state() == QAbstractSocket::UnconnectedState) throw new std::exception;
+    connect(server, SIGNAL(readyRead()), this, SLOT(readyRead()));
     display->start();
     broadcastTimer->start(2500);
     connect(broadcastTimer, SIGNAL(timeout()), this, SLOT(broadcast()));
@@ -61,8 +77,12 @@ void Server::broadcast()
     QByteArray buffer;
     QDataStream stream(&buffer, QIODevice::WriteOnly);
     stream << QString("BROADCAST");
-    for (int i = 0; i < 1000; ++i) {
-        server->writeDatagram(buffer, QHostAddress(QString("192.168.0.").append(i)), 8081);
+    for (int i = 0; i < 257; ++i) {
+        //write to non uni localaddress
+        server->writeDatagram(buffer, QHostAddress(QString("192.168.0.") + QString::number(i)), 8081);
+
+        //write to uni localaddress because or else devices at uni wont be able to pick us up
+        server->writeDatagram(buffer, QHostAddress(QString("10.19.203.") + QString::number(i)), 8081);
     }
 }
 
