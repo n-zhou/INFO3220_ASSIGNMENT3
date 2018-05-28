@@ -22,6 +22,8 @@ void Server::startServer()
     quint16 x = 1;
     //while(!server->bind(QHostAddress(QString("192.168.0.") + QString::number(x++)),
       //                  8080));
+    server->bind(8080);
+    /*
     for (x = 0; x <= 255; ++x) {
         qDebug() << QString("192.168.0.") + QString::number(x);
         qDebug() << server->state();
@@ -36,6 +38,7 @@ void Server::startServer()
                              8080)) break;
         }
     }
+    */
     if (server->state() == QAbstractSocket::UnconnectedState) throw new std::exception;
     connect(server, SIGNAL(readyRead()), this, SLOT(readyRead()));
     display->start();
@@ -83,6 +86,7 @@ void Server::broadcast()
 
         //write to uni localaddress because or else devices at uni wont be able to pick us up
         server->writeDatagram(buffer, QHostAddress(QString("10.19.203.") + QString::number(i)), 8081);
+        server->writeDatagram(buffer, QHostAddress(QString("10.70.12.") + QString::number(i)), 8081);
     }
 }
 
