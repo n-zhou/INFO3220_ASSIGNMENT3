@@ -4,10 +4,10 @@
 #include <QDataStream>
 #include <QVector2D>
 
-Client::Client(QObject *parent) : QObject(parent)
+Client::Client(QObject *parent) : QObject(parent),
+    client(new QUdpSocket(this)), display(new ClientDisplay())
 {
-    client = new QUdpSocket(this);
-    display = new ClientDisplay();
+
 }
 
 void Client::startClient()

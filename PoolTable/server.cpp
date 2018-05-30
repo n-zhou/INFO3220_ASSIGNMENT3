@@ -18,28 +18,10 @@ void Server::startServer()
 {
     qDebug() << "Button Presssed";
     if (server->isValid()) return;
-    //we hard code the port for testing purposes
-    quint16 x = 1;
-    //while(!server->bind(QHostAddress(QString("192.168.0.") + QString::number(x++)),
-      //                  8080));
     server->bind(8080);
-    /*
-    for (x = 0; x <= 255; ++x) {
-        qDebug() << QString("192.168.0.") + QString::number(x);
-        qDebug() << server->state();
-        if (server->bind(QHostAddress(QString("192.168.0.") + QString::number(x)),
-                         8080)) break;
-    }
-    if (server->state() == QAbstractSocket::UnconnectedState) {
-        for (x = 0; x <= 255; ++x) {
-            qDebug() << QString("192.168.0.") + QString::number(x);
-            qDebug() << server->state();
-            if (server->bind(QHostAddress(QString("10.19.203.") + QString::number(x)),
-                             8080)) break;
-        }
-    }
-    */
+
     if (server->state() == QAbstractSocket::UnconnectedState) throw new std::exception;
+
     connect(server, SIGNAL(readyRead()), this, SLOT(readyRead()));
     display->start();
     broadcastTimer->start(2500);
@@ -68,10 +50,14 @@ void Server::readyRead()
         writeStream << QString("INIT");
         display->serializeGame(writeStream);
         server->writeDatagram(data, sender, port);
+        //we found a client so we stop broadcasting
+        broadcastTimer->stop();
     } else if (command == "BROADCAST") {
         qDebug() << "we wrote back to ourselves like idiots";
     } else if (command == "STOP") {
         clientSet.remove(qMakePair(sender, port));
+        //the client decided to leave the game so we start broadcasting for a new client
+        broadcastTimer->start();
     }
 }
 
@@ -80,11 +66,12 @@ void Server::broadcast()
     QByteArray buffer;
     QDataStream stream(&buffer, QIODevice::WriteOnly);
     stream << QString("BROADCAST");
-    for (int i = 0; i < 257; ++i) {
-        //write to non uni localaddress
+    for (quint16 i = 0; i < 257; ++i) {
+        //192.168.0.x is the default private IP address of most devices
         server->writeDatagram(buffer, QHostAddress(QString("192.168.0.") + QString::number(i)), 8081);
 
-        //write to uni localaddress because or else devices at uni wont be able to pick us up
+        /* write to uni localaddress because or else devices at uni wont be able to pick us up.
+         * NOTE: this list is incomplete. we cannot determine every device at uni. */
         server->writeDatagram(buffer, QHostAddress(QString("10.19.203.") + QString::number(i)), 8081);
         server->writeDatagram(buffer, QHostAddress(QString("10.70.12.") + QString::number(i)), 8081);
     }
