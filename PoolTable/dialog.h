@@ -52,19 +52,12 @@ public:
      */
     void mouseReleaseEvent(QMouseEvent *event);
 
-    void keyPressEvent(QKeyEvent *event);
-
-    void keyReleaseEvent(QKeyEvent *event);
-
 signals:
     void mousePressed(QMouseEvent * event);
     void mouseMoved(QMouseEvent * event);
     void mouseReleased(QMouseEvent * event);
-    void keyPressed(QKeyEvent *event);
-    void keyReleased(QKeyEvent *event);
 public slots:
     void runSimulationStep();
-    void pauseGame(QKeyEvent *event);
 private:
     PoolGame * m_game;
     QTimer * m_framerateTimer;

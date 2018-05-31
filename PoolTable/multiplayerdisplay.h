@@ -43,15 +43,19 @@ protected:
         m_game->draw(p);
     }
 
-    virtual void mousePressEvent(QMouseEvent *) {}
+    virtual void mousePressEvent(QMouseEvent *event) {emit mousePressed(event);}
 
-    virtual void mouseReleaseEvent(QMouseEvent *) {}
+    virtual void mouseReleaseEvent(QMouseEvent *event) {emit mouseReleased(event);}
 
-    virtual void mouseMoveEvent(QMouseEvent *) {}
+    virtual void mouseMoveEvent(QMouseEvent *event) {emit mouseMoved(event);}
 
-    virtual void keyPressEvent(QKeyEvent *) {}
+    virtual void keyPressEvent(QKeyEvent *event) {emit keyPressed(event);}
 
 signals:
+    void mousePressed(QMouseEvent *event);
+    void mouseMoved(QMouseEvent *event);
+    void mouseReleased(QMouseEvent *event);
+    void keyPressed(QKeyEvent *event);
 
 public slots:
     virtual void runSimulationStep()

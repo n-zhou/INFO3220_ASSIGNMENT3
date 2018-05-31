@@ -116,8 +116,7 @@ QDataStream& operator<<(QDataStream& stream, const PoolGame &game)
 
 QDataStream& operator>>(QDataStream& stream, PoolGame &game)
 {
-    if (game.m_table)
-        delete game.m_table;
+    if (game.m_table) delete game.m_table;
     game.m_table = new Stage2Table();
     game.m_table->deserialize(stream);
     for (auto b : game.m_balls) delete b;

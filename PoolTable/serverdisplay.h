@@ -17,6 +17,7 @@ public:
     void start();
 
     QDataStream& serializeGame(QDataStream &stream);
+protected:
 
 private:
 

@@ -20,6 +20,7 @@ public:
 
 protected:
 
+
 private:
     void synchronize(QDataStream &data);
 };
