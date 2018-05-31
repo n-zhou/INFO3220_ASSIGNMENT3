@@ -63,7 +63,9 @@ HEADERS  += dialog.h \
     client.h \
     clientdisplay.h \
     stage3factory.h \
-    serverdisplay.h
+    serverdisplay.h \
+    multiplayerdisplay.h \
+    multiplayerdisplay.h
 
 DISTFILES += \
     config.json

@@ -1,23 +1,20 @@
 #include "clientdisplay.h"
 #include <QString>
 
-ClientDisplay::ClientDisplay(double fps, double tps, QWidget *parent) :
-    QDialog(parent), m_game(new PoolGame()), m_framerateTimer(new QTimer()),
-    m_timestepTimer(new QTimer()), m_fps(fps), m_tps(tps)
+ClientDisplay::ClientDisplay(QWidget *parent) :
+    MultiplayerDisplay(parent)
 {
 
 }
 
 ClientDisplay::~ClientDisplay()
 {
-    if (m_game) delete m_game;
-    if (m_framerateTimer) delete m_framerateTimer;
-    if (m_timestepTimer) delete m_timestepTimer;
+
 }
 
-#include <QDebug>
 void ClientDisplay::start(QDataStream &stream)
 {
+    m_game = new PoolGame;
     stream >> *m_game;
     this->setMinimumSize(m_game->size());
     this->resize(m_game->size());
@@ -26,17 +23,6 @@ void ClientDisplay::start(QDataStream &stream)
     m_framerateTimer->start(1000/m_fps);
     m_timestepTimer->start(1000*m_tps);
     this->show();
-}
-
-void ClientDisplay::paintEvent(QPaintEvent *)
-{
-    QPainter p(this);
-    m_game->draw(p);
-}
-
-void ClientDisplay::runSimulationStep()
-{
-    m_game->simulateTimeStep(0.01);
 }
 
 void ClientDisplay::synchronize(QDataStream &data)

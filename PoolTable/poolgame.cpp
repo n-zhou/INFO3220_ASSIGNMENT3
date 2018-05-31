@@ -116,7 +116,8 @@ QDataStream& operator<<(QDataStream& stream, const PoolGame &game)
 
 QDataStream& operator>>(QDataStream& stream, PoolGame &game)
 {
-    if (game.m_table) delete game.m_table;
+    if (game.m_table)
+        delete game.m_table;
     game.m_table = new Stage2Table();
     game.m_table->deserialize(stream);
     for (auto b : game.m_balls) delete b;
@@ -132,7 +133,7 @@ QDataStream& operator>>(QDataStream& stream, PoolGame &game)
         } else if (type == "stage2") {
             ball = new Stage2Ball();
         } else {
-            throw new std::invalid_argument("unexpected type");
+            throw new std::invalid_argument("unsupported type");
         }
         ball->deserialize(stream);
         game.m_balls.push_back(ball);

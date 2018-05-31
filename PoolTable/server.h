@@ -16,7 +16,7 @@ public:
     explicit Server(QObject *parent = nullptr);
     ~Server();
 
-
+    void setGame(PoolGame *game);
 
 
 private:

@@ -11,6 +11,7 @@
  */
 class Stage1Ball : public Ball
 {
+
 public:
     Stage1Ball();
 

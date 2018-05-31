@@ -17,7 +17,7 @@ MainWindow::MainWindow(Initializer &init, QWidget *parent) : QMainWindow(parent)
 
     widget = new QWidget(this);
     client.startClient();
-
+    server.setGame(game);
     //creates the mainwindow GUI
     createFormGroupBox();
     //let widget delete this

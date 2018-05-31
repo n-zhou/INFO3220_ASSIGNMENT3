@@ -70,11 +70,16 @@ void Server::broadcast()
         //192.168.0.x is the default private IP address of most devices
         server->writeDatagram(buffer, QHostAddress(QString("192.168.0.") + QString::number(i)), 8081);
 
-        /* write to uni localaddress because or else devices at uni wont be able to pick us up.
+        /* write to uni localaddress or else devices at uni wont be able to pick us up.
          * NOTE: this list is incomplete. we cannot determine every device at uni. */
         server->writeDatagram(buffer, QHostAddress(QString("10.19.203.") + QString::number(i)), 8081);
         server->writeDatagram(buffer, QHostAddress(QString("10.70.12.") + QString::number(i)), 8081);
     }
+}
+
+void Server::setGame(PoolGame *game)
+{
+
 }
 
 Server::~Server()

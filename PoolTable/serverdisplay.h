@@ -6,14 +6,12 @@
 #include <QDialog>
 #include <QTimer>
 #include <QDataStream>
+#include "multiplayerdisplay.h"
 
-#include "poolgame.h"
-
-class ServerDisplay : public QDialog
+class ServerDisplay : public MultiplayerDisplay
 {
-    Q_OBJECT
 public:
-    ServerDisplay(double fps = 60, double tps = 0.01, QWidget *parent = nullptr);
+    ServerDisplay(QWidget *parent = nullptr);
     ~ServerDisplay();
 
     void start();
@@ -21,19 +19,7 @@ public:
     QDataStream& serializeGame(QDataStream &stream);
 
 private:
-    PoolGame *m_game = nullptr;
-    QTimer *m_framerateTimer = nullptr;
-    QTimer *m_timestepTimer = nullptr;
-    double m_fps;
-    double m_tps;
 
-protected:
-    void paintEvent(QPaintEvent *);
-
-signals:
-
-public slots:
-    void runSimulationStep();
 
 };
 
