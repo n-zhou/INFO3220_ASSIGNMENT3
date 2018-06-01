@@ -55,6 +55,12 @@ public:
         return (this->position()-other->position()).length() < this->radius()+other->radius();
     }
 
+    /**
+     * @brief clone copies the existing object deeply ;)
+     * @return a deep copy of this object
+     */
+    virtual Ball* clone() = 0;
+
     virtual void serialize(QDataStream &stream)
     {
         stream << m_type;

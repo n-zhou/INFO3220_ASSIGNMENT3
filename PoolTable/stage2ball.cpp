@@ -128,3 +128,29 @@ ChangeInPoolGame SimpleStage2Ball::changeVelocity(const QVector2D &deltaV)
     return ChangeInPoolGame();
 }
 
+Ball* CompositeBall::clone()
+{
+    CompositeBall *ball = new CompositeBall();
+    QByteArray buffer;
+    QDataStream stream(&buffer, QIODevice::ReadWrite);
+    this->serialize(stream);
+    //discard the header since we know it's a compositeball
+    QString throwaway;
+    stream >> throwaway;
+    ball->deserialize(stream);
+    return ball;
+}
+
+Ball* SimpleStage2Ball::clone()
+{
+    SimpleStage2Ball *ball = new SimpleStage2Ball();
+    QByteArray buffer;
+    QDataStream stream(&buffer, QIODevice::ReadWrite);
+    this->serialize(stream);
+    //discard the header since we know it will be a simple stage 2 ball
+    QString throwaway;
+    stream >> throwaway;
+    ball->deserialize(stream);
+    return ball;
+}
+

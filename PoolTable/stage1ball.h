@@ -22,6 +22,8 @@ public:
      * @param painter to use to draw the ball
      */
     void draw(QPainter &p);
+
+    Ball* clone() {throw std::logic_error("Unsupported Operation"); return nullptr;}
 };
 
 #endif // STAGEONEBALL_H

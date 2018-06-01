@@ -130,7 +130,7 @@ QDataStream& operator>>(QDataStream& stream, PoolGame &game)
         if (type == "composite") {
             ball = new CompositeBall();
         } else if (type == "stage2") {
-            ball = new Stage2Ball();
+            ball = new SimpleStage2Ball();
         } else {
             throw new std::invalid_argument("unsupported type");
         }
