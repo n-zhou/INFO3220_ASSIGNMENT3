@@ -8,7 +8,7 @@ void Stage2Ball::draw(QPainter &p)
     p.drawEllipse(m_position.toPointF(),m_radius,m_radius);
 }
 
-void Stage2Ball::serialize(QDataStream &stream)
+void Stage2Ball::serialize(QDataStream &stream) const
 {
     Ball::serialize(stream);
     stream << m_strength;
@@ -89,7 +89,7 @@ void CompositeBall::setRadius(float newRadius)
     }
 }
 
-void CompositeBall::serialize(QDataStream &stream)
+void CompositeBall::serialize(QDataStream &stream) const
 {
     Stage2Ball::serialize(stream);
     stream << m_containedMass << drawChildren;
@@ -128,7 +128,7 @@ ChangeInPoolGame SimpleStage2Ball::changeVelocity(const QVector2D &deltaV)
     return ChangeInPoolGame();
 }
 
-Ball* CompositeBall::clone()
+Ball* CompositeBall::clone() const
 {
     CompositeBall *ball = new CompositeBall();
     QByteArray buffer;
@@ -141,7 +141,7 @@ Ball* CompositeBall::clone()
     return ball;
 }
 
-Ball* SimpleStage2Ball::clone()
+Ball* SimpleStage2Ball::clone() const
 {
     SimpleStage2Ball *ball = new SimpleStage2Ball();
     QByteArray buffer;

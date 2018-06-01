@@ -23,7 +23,7 @@ public:
      */
     void draw(QPainter &p);
 
-    Ball* clone() {throw std::logic_error("Unsupported Operation"); return nullptr;}
+    Ball* clone() const override {throw std::logic_error("Unsupported Operation"); return nullptr;}
 };
 
 #endif // STAGEONEBALL_H

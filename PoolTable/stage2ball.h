@@ -18,7 +18,7 @@ public:
 public:
     void draw(QPainter &p);
 
-    virtual void serialize(QDataStream &stream);
+    virtual void serialize(QDataStream &stream) const;
 
     virtual void deserialize(QDataStream &stream);
 
@@ -76,11 +76,11 @@ public:
      */
     void setRadius(float newRadius);
 
-    void serialize(QDataStream &stream) override;
+    void serialize(QDataStream &stream) const override;
 
     void deserialize(QDataStream &stream) override;
 
-    Ball* clone() override;
+    Ball* clone() const override;
 
 protected:
     std::vector<Ball*> m_containedBalls;
@@ -98,7 +98,7 @@ class SimpleStage2Ball : public Stage2Ball
 public:
     SimpleStage2Ball(): Stage2Ball(){Ball::m_type = QString("stage2");}
     ChangeInPoolGame changeVelocity(const QVector2D &deltaV);
-    Ball* clone() override;
+    Ball* clone() const override;
 };
 
 #endif // STAGE2BALL_H

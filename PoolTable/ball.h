@@ -59,9 +59,9 @@ public:
      * @brief clone copies the existing object deeply ;)
      * @return a deep copy of this object
      */
-    virtual Ball* clone() = 0;
+    virtual Ball* clone() const = 0;
 
-    virtual void serialize(QDataStream &stream)
+    virtual void serialize(QDataStream &stream) const
     {
         stream << m_type;
         stream << m_position << m_velocity << m_radius
