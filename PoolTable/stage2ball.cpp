@@ -134,6 +134,8 @@ Ball* CompositeBall::clone() const
     QByteArray buffer;
     QDataStream stream(&buffer, QIODevice::ReadWrite);
     this->serialize(stream);
+    //put the stream at the beginning
+    stream.device()->reset();
     //discard the header since we know it's a compositeball
     QString throwaway;
     stream >> throwaway;
@@ -147,6 +149,8 @@ Ball* SimpleStage2Ball::clone() const
     QByteArray buffer;
     QDataStream stream(&buffer, QIODevice::ReadWrite);
     this->serialize(stream);
+    //put the stream at the beginning
+    stream.device()->reset();
     //discard the header since we know it will be a simple stage 2 ball
     QString throwaway;
     stream >> throwaway;

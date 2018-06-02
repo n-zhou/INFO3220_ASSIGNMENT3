@@ -51,11 +51,14 @@ protected:
 
     virtual void keyPressEvent(QKeyEvent *event) {emit keyPressed(event);}
 
+    virtual void keyReleaseEvent(QKeyEvent *event) {emit keyReleased(event);}
+
 signals:
     void mousePressed(QMouseEvent *event);
     void mouseMoved(QMouseEvent *event);
     void mouseReleased(QMouseEvent *event);
     void keyPressed(QKeyEvent *event);
+    void keyReleased(QKeyEvent *event);
 
 public slots:
     virtual void runSimulationStep()

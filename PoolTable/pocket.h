@@ -12,7 +12,7 @@ class Pocket
 public:
 
     /**
-     * @brief Pocket default constructor added for stage 3
+     * @brief Pocket default constructor added for stage 3 to avoid telescoping
      */
     Pocket()
         : m_position(), m_radius()

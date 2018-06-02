@@ -32,7 +32,7 @@ public:
         :m_table(m_table),m_balls(balls)
     {}
 
-    ~PoolGame();
+    virtual ~PoolGame();
 
     /**
      * @brief simulate one timestep of the game
