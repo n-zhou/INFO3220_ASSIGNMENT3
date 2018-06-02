@@ -44,7 +44,7 @@ public:
      * @brief draws all elements of the game, table and balls in that order
      * @param p is the painter which is used to paint the object
      */
-    void draw(QPainter &p);
+    virtual void draw(QPainter &p);
 
     /**
      * @brief size
@@ -55,7 +55,7 @@ public:
     friend QDataStream& operator<<(QDataStream &stream, const PoolGame &game);
 
     friend QDataStream& operator>>(QDataStream &stream, PoolGame &game);
-private:
+protected:
     /**
      * @brief collide two balls if they are in contact
      * @param b1
@@ -63,7 +63,6 @@ private:
      * @return the change in the pool game after the collision
      */
     ChangeInPoolGame collide(Ball *b1, Ball *b2);
-
 
     Table * m_table = nullptr;
     std::vector<Ball*> m_balls;

@@ -38,8 +38,7 @@ SOURCES += main.cpp \
     clientdisplay.cpp \
     stage3factory.cpp \
     serverdisplay.cpp \
-    stage3cueball.cpp \
-    poolgamedecorator.cpp
+    mediator.cpp
 
 HEADERS  += dialog.h \
     poolgame.h \
@@ -68,8 +67,7 @@ HEADERS  += dialog.h \
     serverdisplay.h \
     multiplayerdisplay.h \
     multiplayerdisplay.h \
-    stage3cueball.h \
-    poolgamedecorator.h
+    mediator.h
 
 DISTFILES += \
     config.json
