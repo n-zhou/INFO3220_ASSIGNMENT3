@@ -58,6 +58,13 @@ void Server::readyRead()
         clientSet.remove(qMakePair(sender, port));
         //the client decided to leave the game so we start broadcasting for a new client
         broadcastTimer->start();
+    } else if (command == "UNDO") {
+        //client requested an undo
+
+        //write back the balls to the client
+        writeStream << QString("UNDO STATE");
+
+        server->writeDatagram(data, sender, port);
     }
 }
 
