@@ -28,6 +28,7 @@ signals:
 public slots:
     void readyRead();
     void joinGame();
+    void writeMessage(QByteArray data);
 };
 
 #endif // CLIENT_H

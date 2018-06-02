@@ -38,7 +38,7 @@ public:
      * @brief simulate one timestep of the game
      * @param timeStep is the period of time that this timestep is simulating
      */
-    void simulateTimeStep(float timeStep);
+    virtual void simulateTimeStep(float timeStep);
 
     /**
      * @brief draws all elements of the game, table and balls in that order

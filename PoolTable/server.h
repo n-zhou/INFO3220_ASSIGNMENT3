@@ -16,9 +16,6 @@ public:
     explicit Server(QObject *parent = nullptr);
     ~Server();
 
-    void setGame(PoolGame *game);
-
-
 private:
     QUdpSocket *server = nullptr;
     ServerDisplay *display = nullptr;
@@ -36,7 +33,7 @@ public slots:
 
     /**
      * @brief broadcast actually performs a multicast to 192.168.0.x
-     * where x is [0, 100) on port 8081.
+     * where x is [0, 257] on port 8081.
      */
     void broadcast();
 
@@ -45,6 +42,14 @@ public slots:
      * address which we can bind the udp socket to.
      */
     void startServer();
+
+    /**
+     * @brief writeMessage broadcasts the message to all the clients
+     * @param data
+     */
+    void writeMessage(QByteArray data);
+
+
 };
 
 #endif // SERVER_H

@@ -18,9 +18,9 @@ public:
 public:
     void draw(QPainter &p);
 
-    virtual void serialize(QDataStream &stream) const;
+    virtual void serialize(QDataStream &stream) const override;
 
-    virtual void deserialize(QDataStream &stream);
+    virtual void deserialize(QDataStream &stream) override;
 
 protected:
     float m_strength;

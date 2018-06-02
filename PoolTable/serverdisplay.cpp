@@ -15,7 +15,6 @@ ServerDisplay::~ServerDisplay()
 
 void ServerDisplay::start()
 {
-    //get rid of this
     m_game = Initializer().createPoolgame("../PoolTable/config.json", nullptr);
     this->setMinimumSize(m_game->size());
     this->resize(m_game->size());
@@ -27,7 +26,7 @@ void ServerDisplay::start()
 
 }
 
-QDataStream& ServerDisplay::serializeGame(QDataStream &stream)
+QDataStream& ServerDisplay::serializeGame(QDataStream &stream) const
 {
     stream << *m_game;
     return stream;

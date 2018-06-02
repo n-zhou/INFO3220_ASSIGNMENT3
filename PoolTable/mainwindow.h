@@ -33,14 +33,20 @@ private:
      */
     Dialog w;
 
+    /**
+     * @brief server
+     */
     Server server;
+
+    /**
+     * @brief client
+     */
     Client client;
 
 
 signals:
 
 public slots:
-    void addNewServer();
 
 };
 

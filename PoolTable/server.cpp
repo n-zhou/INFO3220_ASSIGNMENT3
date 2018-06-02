@@ -36,11 +36,9 @@ void Server::readyRead()
     QHostAddress sender;
     quint16 port;
     server->readDatagram(buffer.data(), buffer.size(), &sender, &port);
-    qDebug() << "Server Reading from:" << sender << port;
     QDataStream stream(&buffer, QIODevice::ReadOnly);
     QString command;
     stream >> command;
-    qDebug() << command;
 
     QByteArray data;
     QDataStream writeStream(&data, QIODevice::WriteOnly);
@@ -84,9 +82,12 @@ void Server::broadcast()
     }
 }
 
-void Server::setGame(PoolGame *game)
+void Server::writeMessage(QByteArray data)
 {
-
+    for (auto pair: clientSet)
+    {
+        server->writeDatagram(data, pair.first, pair.second);
+    }
 }
 
 Server::~Server()

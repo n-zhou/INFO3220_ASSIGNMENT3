@@ -25,27 +25,30 @@ void Client::readyRead()
     QHostAddress sender;
     quint16 port;
     client->readDatagram(buffer.data(), buffer.size(), &sender, &port);
-    qDebug() << "Client Reading From:" << sender << port;
     QDataStream stream(&buffer, QIODevice::ReadOnly);
     QString command;
     stream >> command;
-    qDebug() << command;
     if (command == "INIT") {
         display->start(stream);
     } else if (command == "BROADCAST") {
         pair = qMakePair(sender, port);
+    } else if (command == "UNDO STATE") {
+
     }
 
 }
 
 void Client::joinGame()
 {
-    qDebug() << "button pressed";
     QByteArray buffer;
     QDataStream stream(&buffer, QIODevice::WriteOnly);
     stream << QString("INIT");
-    qDebug() << pair.first << pair.second;
     client->writeDatagram(buffer, pair.first, pair.second);
+}
+
+void Client::writeMessage(QByteArray data)
+{
+    client->writeDatagram(data, pair.first, pair.second);
 }
 
 Client::~Client()

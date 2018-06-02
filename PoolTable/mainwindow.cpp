@@ -17,7 +17,6 @@ MainWindow::MainWindow(Initializer &init, QWidget *parent) : QMainWindow(parent)
 
     widget = new QWidget(this);
     client.startClient();
-    server.setGame(game);
     //creates the mainwindow GUI
     createFormGroupBox();
     //let widget delete this
@@ -42,16 +41,8 @@ void MainWindow::createFormGroupBox()
     QPushButton *button = new QPushButton("Join");
     connect(button, SIGNAL(pressed()), &client, SLOT(joinGame()));
     layout->addRow(new QLabel(tr("Some Game")), button);
-
     m_groupBox->setLayout(layout);
 }
-
-void MainWindow::addNewServer()
-{
-
-}
-
-
 
 MainWindow::~MainWindow()
 {
