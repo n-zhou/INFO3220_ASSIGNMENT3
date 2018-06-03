@@ -28,7 +28,7 @@ private:
     friend class ClientGame;
 
 signals:
-
+    void undo(QDataStream &stream);
 public slots:
     void readyRead();
     void joinGame();

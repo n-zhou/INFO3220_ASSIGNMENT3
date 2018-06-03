@@ -33,7 +33,7 @@ void Client::readyRead()
     } else if (command == "BROADCAST") {
         pair = qMakePair(sender, port);
     } else if (command == "UNDO") {
-
+        emit undo(stream);
     }
 
 }
