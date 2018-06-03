@@ -45,6 +45,9 @@ public slots:
     void mouseMoved(QMouseEvent *event);
     void mouseReleased(QMouseEvent *event);
     void keyPressed(QKeyEvent *event);
+
+    void hit(QDataStream &stream);
+    void undo();
 };
 
 #endif // SERVERGAME_H

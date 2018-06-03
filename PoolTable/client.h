@@ -24,15 +24,18 @@ private:
     ClientDisplay *display = nullptr;
 
     QPair<QHostAddress, quint16> pair;
+    bool set;
 
     friend class ClientGame;
 
 signals:
     void undo(QDataStream &stream);
+    void hit(QDataStream &stream);
 public slots:
     void readyRead();
     void joinGame();
     void writeMessage(QByteArray data);
+
 };
 
 #endif // CLIENT_H

@@ -26,7 +26,8 @@ private:
 
     friend class ServerGame;
 signals:
-
+    void undo();
+    void hit(QDataStream &stream);
 public slots:
     /**
      * @brief readyRead should be fired whenever there is data available

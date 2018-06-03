@@ -57,11 +57,9 @@ void Server::readyRead()
         //the client decided to leave the game so we start broadcasting for a new client
         broadcastTimer->start();
     } else if (command == "UNDO") {
-        //client requested an undo
-        //write back the balls to the client
-        writeStream << QString("UNDO STATE");
-
-        m_socket->writeDatagram(data, sender, port);
+        emit undo();
+    } else if (command == "HIT") {
+        emit hit(stream);
     }
 }
 
@@ -80,6 +78,7 @@ void Server::broadcast()
         m_socket->writeDatagram(buffer, QHostAddress(QString("10.70.12.") + QString::number(i)), 8081);
     }
 }
+
 
 void Server::writeMessage(QByteArray data)
 {

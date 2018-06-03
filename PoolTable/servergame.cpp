@@ -10,6 +10,8 @@ ServerGame::ServerGame(PoolGame *game, ServerDisplay &display, Server &server) :
     connect(&display,&ServerDisplay::mouseReleased,this,&ServerGame::mouseReleased);
     connect(&display,&ServerDisplay::keyPressed,this,&ServerGame::keyPressed);
 
+    connect(&server, &Server::hit,this,&ServerGame::hit);
+    connect(&server, &Server::undo, this, &ServerGame::undo);
     for (auto b : m_balls) const_cast<std::vector<Ball*>&>(m_intitialState).push_back(b->clone());
 }
 
@@ -79,28 +81,45 @@ void ServerGame::keyPressed(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_R)
     {
-        for (auto b: m_balls) delete b;
-        m_balls.clear();
-        if (m_states.empty())
-        {
-            for (auto b: m_intitialState) m_balls.push_back(b->clone());
-        }
-        else
-        {
-            m_originator.restoreFromMemento(m_states.pop());
-            for (auto b: *m_originator.getState()) m_balls.push_back(b->clone());
-        }
+        this->undo();
+    }
+}
 
-        QByteArray buffer;
-        QDataStream stream(&buffer, QIODevice::ReadWrite);
-        stream << QString("UNDO");
-        stream << m_balls.size();
-        for (auto b : m_balls) b->serialize(stream);
-        for (auto pair : *m_ip)
-        {
-            m_socket->writeDatagram(buffer, pair.first, pair.second);
-        }
+void ServerGame::hit(QDataStream &stream)
+{
+    std::vector<Ball*> *saveState = new std::vector<Ball*>;
+    for (auto b: m_balls) saveState->push_back(b->clone());
+    m_originator.set(saveState);
+    m_states.push(m_originator.saveToMemento());
 
+    int index = 0;
+    QVector2D velocity;
+    stream >> index >> velocity;
+    m_balls[index]->setVelocity(velocity);
+}
+
+void ServerGame::undo()
+{
+    for (auto b: m_balls) delete b;
+    m_balls.clear();
+    if (m_states.empty())
+    {
+        for (auto b: m_intitialState) m_balls.push_back(b->clone());
+    }
+    else
+    {
+        m_originator.restoreFromMemento(m_states.pop());
+        for (auto b: *m_originator.getState()) m_balls.push_back(b->clone());
+    }
+
+    QByteArray buffer;
+    QDataStream stream(&buffer, QIODevice::ReadWrite);
+    stream << QString("UNDO");
+    stream << m_balls.size();
+    for (auto b : m_balls) b->serialize(stream);
+    for (auto pair : *m_ip)
+    {
+        m_socket->writeDatagram(buffer, pair.first, pair.second);
     }
 }
 

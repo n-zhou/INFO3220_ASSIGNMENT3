@@ -5,7 +5,8 @@
 #include <QVector2D>
 
 Client::Client(QObject *parent) : QObject(parent),
-    client(new QUdpSocket(this)), display(new ClientDisplay())
+    client(new QUdpSocket(this)), display(new ClientDisplay()),
+    set(false)
 {
 
 }
@@ -31,9 +32,15 @@ void Client::readyRead()
     if (command == "INIT") {
         display->start(stream, *this);
     } else if (command == "BROADCAST") {
-        pair = qMakePair(sender, port);
+        if (!set)
+        {
+            set = true;
+            pair = qMakePair(sender, port);
+        }
     } else if (command == "UNDO") {
         emit undo(stream);
+    } else if (command == "HIT") {
+        emit hit(stream);
     }
 
 }
