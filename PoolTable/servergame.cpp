@@ -66,7 +66,7 @@ void ServerGame::mouseReleased(QMouseEvent *event)
 
         QByteArray buffer;
         QDataStream stream(&buffer, QIODevice::ReadWrite);
-
+        stream << QString("HIT") << m_indexOfBall << b->velocity();
         for (auto pair : *m_ip)
         {
             m_socket->writeDatagram(buffer, pair.first, pair.second);
@@ -89,6 +89,16 @@ void ServerGame::keyPressed(QKeyEvent *event)
         {
             m_originator.restoreFromMemento(m_states.pop());
             for (auto b: *m_originator.getState()) m_balls.push_back(b->clone());
+        }
+
+        QByteArray buffer;
+        QDataStream stream(&buffer, QIODevice::ReadWrite);
+        stream << QString("UNDO");
+        stream << m_balls.size();
+        for (auto b : m_balls) b->serialize(stream);
+        for (auto pair : *m_ip)
+        {
+            m_socket->writeDatagram(buffer, pair.first, pair.second);
         }
 
     }

@@ -1,5 +1,6 @@
 #include "clientdisplay.h"
 #include <QString>
+#include "clientgame.h"
 
 ClientDisplay::ClientDisplay(QWidget *parent) :
     MultiplayerDisplay(parent)
@@ -12,10 +13,11 @@ ClientDisplay::~ClientDisplay()
 
 }
 
-void ClientDisplay::start(QDataStream &stream)
+void ClientDisplay::start(QDataStream &stream, Client &client)
 {
     m_game = new PoolGame;
     stream >> *m_game;
+    m_game = new ClientGame(m_game, *this, client);
     this->setMinimumSize(m_game->size());
     this->resize(m_game->size());
     connect(m_framerateTimer,SIGNAL(timeout()),this,SLOT(update()));

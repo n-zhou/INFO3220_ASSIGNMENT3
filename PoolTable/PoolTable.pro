@@ -40,7 +40,8 @@ SOURCES += main.cpp \
     serverdisplay.cpp \
     memento.cpp \
     originator.cpp \
-    servergame.cpp
+    servergame.cpp \
+    clientgame.cpp
 
 HEADERS  += dialog.h \
     poolgame.h \
@@ -71,7 +72,8 @@ HEADERS  += dialog.h \
     multiplayerdisplay.h \
     memento.h \
     originator.h \
-    servergame.h
+    servergame.h \
+    clientgame.h
 
 DISTFILES += \
     config.json

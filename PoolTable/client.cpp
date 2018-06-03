@@ -29,10 +29,10 @@ void Client::readyRead()
     QString command;
     stream >> command;
     if (command == "INIT") {
-        display->start(stream);
+        display->start(stream, *this);
     } else if (command == "BROADCAST") {
         pair = qMakePair(sender, port);
-    } else if (command == "UNDO STATE") {
+    } else if (command == "UNDO") {
 
     }
 

@@ -21,7 +21,7 @@ class ServerGame : public PoolGame, public QObject
 public:
     ServerGame(PoolGame *game, ServerDisplay &display, Server &server);
 
-    ~ServerGame() {}
+    ~ServerGame() = default;
 
     void draw(QPainter &p) override;
 

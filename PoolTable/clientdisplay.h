@@ -8,6 +8,8 @@
 #include <QDataStream>
 #include "multiplayerdisplay.h"
 
+class Client;
+
 class ClientDisplay : public MultiplayerDisplay
 {
 
@@ -16,13 +18,11 @@ public:
     ClientDisplay(QWidget *parent = nullptr);
     ~ClientDisplay();
 
-    void start(QDataStream &stream);
+    void start(QDataStream &stream, Client &client);
 
-protected:
-
-
-private:
+public slots:
     void synchronize(QDataStream &data);
+
 };
 
 #endif // CLIENTDISPLAY_H

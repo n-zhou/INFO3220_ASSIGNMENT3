@@ -8,6 +8,8 @@
 
 #include "clientdisplay.h"
 
+class ClientGame;
+
 class Client : public QObject
 {
     Q_OBJECT
@@ -22,6 +24,8 @@ private:
     ClientDisplay *display = nullptr;
 
     QPair<QHostAddress, quint16> pair;
+
+    friend class ClientGame;
 
 signals:
 
