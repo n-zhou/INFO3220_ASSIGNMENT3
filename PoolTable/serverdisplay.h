@@ -8,13 +8,15 @@
 #include <QDataStream>
 #include "multiplayerdisplay.h"
 
+class Server;
+
 class ServerDisplay : public MultiplayerDisplay
 {
 public:
     ServerDisplay(QWidget *parent = nullptr);
     ~ServerDisplay();
 
-    void start();
+    void start(Server &server);
 
     QDataStream& serializeGame(QDataStream &stream) const;
 

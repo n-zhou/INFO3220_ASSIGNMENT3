@@ -39,7 +39,8 @@ SOURCES += main.cpp \
     stage3factory.cpp \
     serverdisplay.cpp \
     memento.cpp \
-    originator.cpp
+    originator.cpp \
+    servergame.cpp
 
 HEADERS  += dialog.h \
     poolgame.h \
@@ -69,7 +70,8 @@ HEADERS  += dialog.h \
     multiplayerdisplay.h \
     multiplayerdisplay.h \
     memento.h \
-    originator.h
+    originator.h \
+    servergame.h
 
 DISTFILES += \
     config.json

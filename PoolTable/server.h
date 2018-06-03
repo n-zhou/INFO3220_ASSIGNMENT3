@@ -9,6 +9,8 @@
 
 #include "serverdisplay.h"
 
+class ServerGame;
+
 class Server : public QObject
 {
     Q_OBJECT
@@ -17,11 +19,12 @@ public:
     ~Server();
 
 private:
-    QUdpSocket *server = nullptr;
+    QUdpSocket *m_socket = nullptr;
     ServerDisplay *display = nullptr;
     QTimer *broadcastTimer = nullptr;
     QSet<QPair<QHostAddress, quint16>> clientSet;
 
+    friend class ServerGame;
 signals:
 
 public slots:
