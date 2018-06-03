@@ -38,13 +38,13 @@ private:
     //undo states
     QStack<Memento*> m_states;
     Originator m_originator;
+    const std::vector<Ball*> m_intitialState;
 
 public slots:
     void mousePressed(QMouseEvent *event);
     void mouseMoved(QMouseEvent *event);
     void mouseReleased(QMouseEvent *event);
     void keyPressed(QKeyEvent *event);
-    void keyReleased(QKeyEvent *event);
 };
 
 #endif // SERVERGAME_H
