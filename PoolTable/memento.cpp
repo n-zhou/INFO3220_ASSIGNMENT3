@@ -1,21 +1,18 @@
 #include "memento.h"
 
-Memento::Memento()
+Memento::Memento(std::vector<Ball*> *state) :
+    state(state)
 {
 
 }
 
 Memento::~Memento()
 {
-    for (auto b: state) delete b;
+    if (state)
+        for (auto b: *state) delete b;
 }
 
-void Memento::setState(std::vector<Ball *> &balls)
+const std::vector<Ball*> *Memento::getState()
 {
-    for (auto b: balls) state.push_back(b->clone());
-}
-
-std::vector<Ball*> Memento::getState()
-{
-    return std::move(state);
+    return state;
 }

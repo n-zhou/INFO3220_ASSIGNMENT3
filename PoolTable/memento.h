@@ -15,13 +15,12 @@ private:
     //make sure only the originator can modify this class
     friend class Originator;
 
-    Memento();
+    Memento(std::vector<Ball*> *state);
 
-    void setState(std::vector<Ball*> &balls);
-    std::vector<Ball*> getState();
+    const std::vector<Ball*>* getState();
 
 private:
-    std::vector<Ball*> state;
+    const std::vector<Ball*> *state = nullptr;
 };
 
 #endif // MEMENTO_H

@@ -58,7 +58,6 @@ void Server::readyRead()
         broadcastTimer->start();
     } else if (command == "UNDO") {
         //client requested an undo
-
         //write back the balls to the client
         writeStream << QString("UNDO STATE");
 

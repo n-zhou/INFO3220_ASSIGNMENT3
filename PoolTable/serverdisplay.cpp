@@ -10,11 +10,14 @@ ServerDisplay::ServerDisplay(QWidget *parent) :
 
 ServerDisplay::~ServerDisplay()
 {
-
+    if (m_game) delete m_game;
 }
 
 void ServerDisplay::start()
 {
+
+    if (m_game) return;
+
     m_game = Initializer().createPoolgame("../PoolTable/config.json", nullptr);
     this->setMinimumSize(m_game->size());
     this->resize(m_game->size());
