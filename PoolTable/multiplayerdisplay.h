@@ -59,9 +59,6 @@ signals:
     void mouseReleased(QMouseEvent *event);
     void keyPressed(QKeyEvent *event);
     void keyReleased(QKeyEvent *event);
-
-    void writeMessage(QByteArray data);
-
 public slots:
     virtual void runSimulationStep()
     {

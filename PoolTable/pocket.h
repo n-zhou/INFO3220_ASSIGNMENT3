@@ -27,8 +27,16 @@ public:
         return (circleCentre-m_position).length() + r < m_radius;
     }
 
+    /**
+     * @brief serialize serializes the pocket into bytes
+     * @param stream
+     */
     void serialize(QDataStream &stream);
 
+    /**
+     * @brief deserialize deserializes the data so the object can have attribrutes
+     * @param stream
+     */
     void deserialize(QDataStream &stream);
 
 private:
