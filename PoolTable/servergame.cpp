@@ -5,12 +5,11 @@ ServerGame::ServerGame(PoolGame *game, ServerDisplay &display, Server &server) :
     m_socket(server.m_socket), m_ip(&server.clientSet), m_pos(),
     m_clicked(false), m_indexOfBall(-1), m_states(), m_originator()
 {
-    connect(&display, SIGNAL(mousePressed(QMouseEvent*)), this, SLOT(mousePressed(QMouseEvent*)));
-    connect(&display, SIGNAL(mouseMoved(QMouseEvent*)), this, SLOT(mouseMoved(QMouseEvent*)));
-    connect(&display, SIGNAL(mouseReleased(QMouseEvent*)), this, SLOT(mouseReleased(QMouseEvent*)));
-    connect(&display, SIGNAL(keyPressed(QKeyEvent*)), this, SLOT(keyPressed(QKeyEvent*)));
-    connect(&display, SIGNAL(keyReleased(QKeyEvent*)), this, SLOT(keyReleased(QKeyEvent*)));
-
+    connect(&display,&ServerDisplay::mousePressed,this,&ServerGame::mousePressed);
+    connect(&display,&ServerDisplay::mouseMoved,this,&ServerGame::mouseMoved);
+    connect(&display,&ServerDisplay::mouseReleased,this,&ServerGame::mouseReleased);
+    connect(&display,&ServerDisplay::keyPressed,this,&ServerGame::keyPressed);
+    connect(&display,&ServerDisplay::keyReleased,this,&ServerGame::keyReleased);
 }
 
 void ServerGame::draw(QPainter &p)
