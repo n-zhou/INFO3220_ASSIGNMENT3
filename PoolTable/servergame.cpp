@@ -12,7 +12,7 @@ ServerGame::ServerGame(PoolGame *game, ServerDisplay &display, Server &server) :
 
     connect(&server, &Server::hit,this,&ServerGame::hit);
     connect(&server, &Server::undo, this, &ServerGame::undo);
-    connect(m_syncTimer, SIGNAL(timeout()), this, SLOT(synchronize()));
+    connect(m_syncTimer,&QTimer::timeout, this, &ServerGame::synchronize);
     m_syncTimer->start(1000);
     for (auto b : m_balls) const_cast<std::vector<Ball*>&>(m_intitialState).push_back(b->clone());
 }
@@ -97,6 +97,7 @@ void ServerGame::hit(QDataStream &stream)
     int index = 0;
     QVector2D velocity;
     stream >> index >> velocity;
+    if (index == m_indexOfBall) m_clicked = false;
     m_balls[index]->setVelocity(velocity);
 }
 

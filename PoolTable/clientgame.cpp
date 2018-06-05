@@ -103,5 +103,6 @@ void ClientGame::hit(QDataStream &stream)
     int index = 0;
     QVector2D velocity;
     stream >> index >> velocity;
+    if (m_indexOfBall == index) m_clicked = false;
     m_balls[index]->setVelocity(velocity);
 }
