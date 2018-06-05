@@ -23,6 +23,7 @@ void ServerGame::draw(QPainter &p)
     if (m_clicked)
     {
         p.drawLine(m_balls[m_indexOfBall]->position().toPointF(), m_pos.toPointF());
+        if (m_balls[m_indexOfBall]->velocity().lengthSquared() > 0.001) m_clicked = false;
     }
 }
 
