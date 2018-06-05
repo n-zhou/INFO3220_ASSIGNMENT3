@@ -10,6 +10,7 @@
 #include <QStack>
 #include <QByteArray>
 #include <QDataStream>
+#include <QTimer>
 
 #include "originator.h"
 #include "poolgame.h"
@@ -21,7 +22,7 @@ class ServerGame : public PoolGame, public QObject
 public:
     ServerGame(PoolGame *game, ServerDisplay &display, Server &server);
 
-    ~ServerGame() = default;
+    ~ServerGame() {if (m_syncTimer) delete m_syncTimer;}
 
     void draw(QPainter &p) override;
 
@@ -29,6 +30,7 @@ private:
     //socket variables
     QUdpSocket *m_socket = nullptr;
     QSet<QPair<QHostAddress, quint16>> *m_ip;
+    QTimer *m_syncTimer = nullptr;
 
     //mouse and keyboard variables
     QVector2D m_pos;
@@ -48,6 +50,7 @@ public slots:
 
     void hit(QDataStream &stream);
     void undo();
+    void synchronize();
 };
 
 #endif // SERVERGAME_H

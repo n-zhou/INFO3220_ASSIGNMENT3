@@ -2,7 +2,7 @@
 
 ServerGame::ServerGame(PoolGame *game, ServerDisplay &display, Server &server) :
     PoolGame(*game),
-    m_socket(server.m_socket), m_ip(&server.clientSet), m_pos(),
+    m_socket(server.m_socket), m_ip(&server.clientSet), m_syncTimer(new QTimer()), m_pos(),
     m_clicked(false), m_indexOfBall(-1), m_states(), m_originator()
 {
     connect(&display,&ServerDisplay::mousePressed,this,&ServerGame::mousePressed);
@@ -12,6 +12,8 @@ ServerGame::ServerGame(PoolGame *game, ServerDisplay &display, Server &server) :
 
     connect(&server, &Server::hit,this,&ServerGame::hit);
     connect(&server, &Server::undo, this, &ServerGame::undo);
+    connect(m_syncTimer, SIGNAL(timeout()), this, SLOT(synchronize()));
+    m_syncTimer->start(1000);
     for (auto b : m_balls) const_cast<std::vector<Ball*>&>(m_intitialState).push_back(b->clone());
 }
 
@@ -123,3 +125,15 @@ void ServerGame::undo()
     }
 }
 
+void ServerGame::synchronize()
+{
+    QByteArray buffer;
+    QDataStream stream(&buffer, QIODevice::ReadWrite);
+    stream << QString("UNDO");
+    stream << m_balls.size();
+    for (auto b : m_balls) b->serialize(stream);
+    for (auto pair : *m_ip)
+    {
+        m_socket->writeDatagram(buffer, pair.first, pair.second);
+    }
+}
