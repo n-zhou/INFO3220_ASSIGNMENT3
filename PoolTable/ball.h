@@ -15,7 +15,7 @@
 class Ball
 {
 public:
-    Ball(){}
+    Ball() : m_type("unknown") {}
     virtual ~Ball(){}
 
     virtual const QVector2D &position()const{return m_position;}
@@ -56,24 +56,34 @@ public:
     }
 
     /**
-     * @brief clone copies the existing object deeply ;)
+     * @brief clone performs a deep copy of this object
      * @return a deep copy of this object
      */
     virtual Ball* clone() const = 0;
 
+    /**
+     * @brief serialize serializes the game into a QDataStream
+     * @param stream the QIODevice used to serialize the game
+     */
     virtual void serialize(QDataStream &stream) const
     {
-        stream << m_type;
-        stream << m_position << m_velocity << m_radius
-                << m_mass << m_colour;
+        //serialize the header so that the correct subclass can be chosen for deserialization
+        stream << m_type << m_position << m_velocity << m_radius << m_mass << m_colour;
     }
 
+    /**
+     * @brief deserialize recreates an object from the QDatastream
+     * @param stream the QIODevice used to deserialize the game
+     */
     virtual void deserialize(QDataStream &stream)
     {
-        stream >> m_position >> m_velocity >> m_radius
-                >> m_mass >> m_colour;
+        stream >> m_position >> m_velocity >> m_radius >> m_mass >> m_colour;
     }
 
+    /**
+     * @brief type is used to determine the subclass of this object to perform serialization
+     * @return the name of the subclass of this object
+     */
     QString type(){return m_type;}
 
 protected:

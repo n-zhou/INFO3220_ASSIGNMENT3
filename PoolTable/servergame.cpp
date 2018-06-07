@@ -13,7 +13,7 @@ ServerGame::ServerGame(PoolGame *game, ServerDisplay &display, Server &server) :
     connect(&server, &Server::hit,this,&ServerGame::hit);
     connect(&server, &Server::undo, this, &ServerGame::undo);
     connect(m_syncTimer,&QTimer::timeout, this, &ServerGame::synchronize);
-    m_syncTimer->start(1000);
+    m_syncTimer->start(3000);
     for (auto b : m_balls) const_cast<std::vector<Ball*>&>(m_intitialState).push_back(b->clone());
 }
 

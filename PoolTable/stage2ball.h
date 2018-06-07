@@ -18,8 +18,16 @@ public:
 public:
     void draw(QPainter &p);
 
+    /**
+     * @brief serialize serializes the game into a QDataStream
+     * @param stream the QIODevice used to serialize the game
+     */
     virtual void serialize(QDataStream &stream) const override;
 
+    /**
+     * @brief deserialize recreates an object from the QDatastream
+     * @param stream the QIODevice used to deserialize the game
+     */
     virtual void deserialize(QDataStream &stream) override;
 
 protected:
@@ -76,10 +84,22 @@ public:
      */
     void setRadius(float newRadius);
 
+    /**
+     * @brief serialize serializes the game into a QDataStream
+     * @param stream the QIODevice used to serialize the game
+     */
     void serialize(QDataStream &stream) const override;
 
+    /**
+     * @brief deserialize recreates an object from the QDatastream
+     * @param stream the QIODevice used to deserialize the game
+     */
     void deserialize(QDataStream &stream) override;
 
+    /**
+     * @brief clone performs a deep copy of this object
+     * @return a deep copy of this object
+     */
     Ball* clone() const override;
 
 protected:
@@ -98,6 +118,11 @@ class SimpleStage2Ball : public Stage2Ball
 public:
     SimpleStage2Ball(): Stage2Ball(){Ball::m_type = QString("stage2");}
     ChangeInPoolGame changeVelocity(const QVector2D &deltaV);
+
+    /**
+     * @brief clone performs a deep copy of this object
+     * @return a deep copy of this object
+     */
     Ball* clone() const override;
 };
 

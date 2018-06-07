@@ -42,11 +42,19 @@ public:
      */
     virtual void draw(QPainter & p) = 0;
 
+    /**
+     * @brief serialize stores the object in a serialized state
+     * @param stream the stream used for serialization
+     */
     virtual void serialize(QDataStream &stream)
     {
         stream << m_width << m_height << m_friction;
     }
 
+    /**
+     * @brief deserialize restores the object from a deserializes state
+     * @param stream the stream used for deserialization
+     */
     virtual void deserialize(QDataStream &stream)
     {
         stream >> m_width >> m_height >> m_friction;

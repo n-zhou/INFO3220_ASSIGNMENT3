@@ -9,8 +9,18 @@ class Stage3Factory : public AbstractFactory
 public:
     Stage3Factory();
 
+    /**
+     * @brief makes and returns a stageOneBall
+     * @param config is the configuration for the ball in json format
+     * @return a pointer to a valid stage2Ball
+     */
     Ball* makeBall(const QJsonObject &config);
 
+    /**
+     * @brief makes and returns a stageOneTable
+     * @param config is the configuration for the table in json format
+     * @return a pointer to a valid stage2Table
+     */
     Table* makeTable(const QJsonObject &config);
 
 private:

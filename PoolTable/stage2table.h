@@ -27,8 +27,16 @@ public:
      */
     void draw(QPainter &p);
 
+    /**
+     * @brief serialize stores the object in a serialized state
+     * @param stream the stream used for serialization
+     */
     void serialize(QDataStream &stream);
 
+    /**
+     * @brief deserialize restores the object from a deserializes state
+     * @param stream the stream used for deserialization
+     */
     void deserialize(QDataStream &stream);
 
 private:
