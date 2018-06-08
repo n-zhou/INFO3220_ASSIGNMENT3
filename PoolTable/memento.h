@@ -35,7 +35,7 @@ private:
     const std::vector<Ball*>* getState() const;
 
 private:
-    const std::vector<Ball*> *state = nullptr;
+    const std::vector<Ball*> *m_state = nullptr;
 };
 
 #endif // MEMENTO_H

@@ -165,7 +165,10 @@ void ServerGame::synchronize()
 ServerGame::~ServerGame()
 {
     if (m_syncTimer) delete m_syncTimer;
-
+    while (!m_states.empty())
+    {
+        delete m_states.pop();
+    }
 }
 
 
