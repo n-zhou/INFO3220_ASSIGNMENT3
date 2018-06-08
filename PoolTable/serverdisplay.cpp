@@ -21,14 +21,17 @@ void ServerDisplay::start(Server &server)
 
     m_game = Initializer().createPoolgame("../PoolTable/config.json", nullptr);
     m_game = new ServerGame(m_game, *this, server);
+
+    //resize the window for the game
     this->setMinimumSize(m_game->size());
     this->resize(m_game->size());
+
+    //connect our render and timestep timers
     connect(m_framerateTimer,SIGNAL(timeout()),this,SLOT(update()));
     connect(m_timestepTimer, SIGNAL(timeout()),this, SLOT(runSimulationStep()));
     m_framerateTimer->start(1000/m_fps);
     m_timestepTimer->start(1000*m_tps);
     this->show();
-
 }
 
 QDataStream& ServerDisplay::serializeGame(QDataStream &stream) const

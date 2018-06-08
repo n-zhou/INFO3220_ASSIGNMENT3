@@ -90,7 +90,7 @@ Ball* Stage3Factory::makeBallBasedOnParent(const QJsonObject &config, Ball* pare
 
 Ball* Stage3Factory::makeBall(const QJsonObject &config)
 {
-    return  makeBallBasedOnParent(config);
+    return makeBallBasedOnParent(config);
 }
 
 Table* Stage3Factory::makeTable(const QJsonObject &config)

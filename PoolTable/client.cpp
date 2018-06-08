@@ -5,37 +5,37 @@
 #include <QVector2D>
 
 Client::Client(QObject *parent) : QObject(parent),
-    client(new QUdpSocket(this)), display(new ClientDisplay()),
-    set(false)
+    m_client(new QUdpSocket(this)), m_display(new ClientDisplay()),
+    m_set(false)
 {
 
 }
 
 void Client::startClient()
 {
-    if (client->isValid()) return;
-    client->bind(8081);
-    connect(client, SIGNAL(readyRead()), this, SLOT(readyRead()));
+    if (m_client->isValid()) return;
+    m_client->bind(8081);
+    connect(m_client, SIGNAL(readyRead()), this, SLOT(readyRead()));
 
 }
 
 void Client::readyRead()
 {
     QByteArray buffer;
-    buffer.resize(client->pendingDatagramSize());
+    buffer.resize(m_client->pendingDatagramSize());
     QHostAddress sender;
     quint16 port;
-    client->readDatagram(buffer.data(), buffer.size(), &sender, &port);
+    m_client->readDatagram(buffer.data(), buffer.size(), &sender, &port);
     QDataStream stream(&buffer, QIODevice::ReadOnly);
     QString command;
     stream >> command;
     if (command == "INIT") {
-        display->start(stream, *this);
+        m_display->start(stream, *this);
     } else if (command == "BROADCAST") {
-        if (!set)
+        if (!m_set)
         {
-            set = true;
-            pair = qMakePair(sender, port);
+            m_set = true;
+            m_pair = qMakePair(sender, port);
         }
     } else if (command == "UNDO") {
         emit undo(stream);
@@ -50,16 +50,16 @@ void Client::joinGame()
     QByteArray buffer;
     QDataStream stream(&buffer, QIODevice::WriteOnly);
     stream << QString("INIT");
-    client->writeDatagram(buffer, pair.first, pair.second);
+    m_client->writeDatagram(buffer, m_pair.first, m_pair.second);
 }
 
 void Client::writeMessage(QByteArray data)
 {
-    client->writeDatagram(data, pair.first, pair.second);
+    m_client->writeDatagram(data, m_pair.first, m_pair.second);
 }
 
 Client::~Client()
 {
-    if (client) delete client;
-    if (display) delete display;
+    if (m_client) delete m_client;
+    if (m_display) delete m_display;
 }

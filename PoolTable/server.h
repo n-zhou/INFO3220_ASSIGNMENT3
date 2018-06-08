@@ -11,6 +11,12 @@
 
 class ServerGame;
 
+/**
+ * @brief The Server class is used to broadcast the existence of a PoolGame.
+ *
+ * @author Nic Zhou
+ * @since Stage3
+ */
 class Server : public QObject
 {
     Q_OBJECT
@@ -18,10 +24,25 @@ public:
     explicit Server(QObject *parent = nullptr);
     ~Server();
 
-private:
+protected:
+    /**
+     * @brief m_socket the socket which the server is binded to
+     */
     QUdpSocket *m_socket = nullptr;
+
+    /**
+     * @brief display is used to display the host game
+     */
     ServerDisplay *display = nullptr;
+
+    /**
+     * @brief broadcastTimer the timer used to control how often a broadcast is sent
+     */
     QTimer *broadcastTimer = nullptr;
+
+    /**
+     * @brief clientSet the set of clients that have acknoweledged our broadcast
+     */
     QSet<QPair<QHostAddress, quint16>> clientSet;
 
     friend class ServerGame;

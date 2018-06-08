@@ -10,6 +10,13 @@
 #include "client.h"
 #include "initializer.h"
 
+/**
+ * @brief The MainWindow class is used to display a widget to host and join a
+ * simple networked PoolGame. The buttons are one time use.
+ *
+ * @author Nic Zhou
+ * @since Stage3
+ */
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -23,6 +30,7 @@ private:
      */
     void createFormGroupBox();
 
+    //gui layout magic
     QWidget *widget = nullptr;
     QGroupBox *m_groupBox = nullptr;
     QFormLayout *layout = nullptr;
@@ -42,11 +50,6 @@ private:
      * @brief client
      */
     Client client;
-
-
-signals:
-
-public slots:
 
 };
 

@@ -7,12 +7,16 @@ void Originator::set(std::vector<Ball*> *state)
 
 std::vector<Ball*>* Originator::getState() const
 {
-    return m_state;
+    std::vector<Ball*>* state = new std::vector<Ball*>;
+    for (auto b: *m_state) state->push_back(b);
+    return state;
 }
 
 Memento* Originator::saveToMemento()
 {
-    return new Memento(m_state);
+    std::vector<Ball*>* state = new std::vector<Ball*>;
+    for (auto b: *m_state) state->push_back(b);
+    return new Memento(state);
 }
 
 void Originator::restoreFromMemento(Memento *memento)

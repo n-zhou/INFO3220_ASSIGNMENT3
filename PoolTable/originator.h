@@ -32,15 +32,15 @@ public:
     void restoreFromMemento(Memento *memento);
 
     /**
-     * @brief set
-     * @param state copies the state of the balls
+     * @brief set takes in a copied state and stroes it
+     * @param state the parameter to be stored
      */
     void set(std::vector<Ball*> *state);
 
     /**
      * @brief getState
      * @return returns a deep copy of the state which the caretaker is free
-     * to modify as whishes
+     * to modify as they wish
      */
     std::vector<Ball*>* getState() const;
 

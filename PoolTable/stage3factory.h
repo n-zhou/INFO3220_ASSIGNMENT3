@@ -4,6 +4,14 @@
 #include "abstractfactory.h"
 #include "ball.h"
 
+/**
+ * @brief The Stage3Factory class does exactly the same thing as Stage2Factory
+ * except it doesn't apply the decorators. The decorators are a hinderence
+ * to serialization which it them unideal for networking.
+ * @author Nic Zhou
+ * @since Stage3
+ * @see Stage2Factory
+ */
 class Stage3Factory : public AbstractFactory
 {
 public:

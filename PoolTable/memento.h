@@ -32,7 +32,7 @@ private:
      * @brief getState
      * @return the state of the balls
      */
-    const std::vector<Ball*>* getState();
+    const std::vector<Ball*>* getState() const;
 
 private:
     const std::vector<Ball*> *state = nullptr;
