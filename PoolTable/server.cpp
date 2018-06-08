@@ -7,8 +7,8 @@
 #include <QDebug>
 
 Server::Server(QObject *parent) : QObject(parent),
-    m_socket(new QUdpSocket(this)), display(new ServerDisplay()),
-    broadcastTimer(new QTimer())
+    m_socket(new QUdpSocket(this)), m_display(new ServerDisplay()),
+    m_broadcastTimer(new QTimer())
 {
 
 }
@@ -23,9 +23,9 @@ void Server::startServer()
     if (m_socket->state() == QAbstractSocket::UnconnectedState) throw new std::exception;
 
     connect(m_socket, SIGNAL(readyRead()), this, SLOT(readyRead()));
-    display->start(*this);
-    broadcastTimer->start(2500);
-    connect(broadcastTimer, SIGNAL(timeout()), this, SLOT(broadcast()));
+    m_display->start(*this);
+    m_broadcastTimer->start(2500);
+    connect(m_broadcastTimer, SIGNAL(timeout()), this, SLOT(broadcast()));
 }
 
 void Server::readyRead()
@@ -43,19 +43,19 @@ void Server::readyRead()
     QByteArray data;
     QDataStream writeStream(&data, QIODevice::WriteOnly);
     if (command == "INIT") {
-        clientSet.insert(qMakePair(sender, port));
+        m_clientSet.insert(qMakePair(sender, port));
         //SENDS THE DATA OF THE GAME TO THE CLIENT
         writeStream << QString("INIT");
-        display->serializeGame(writeStream);
+        m_display->serializeGame(writeStream);
         m_socket->writeDatagram(data, sender, port);
         //we found a client so we stop broadcasting
-        broadcastTimer->stop();
+        m_broadcastTimer->stop();
     } else if (command == "BROADCAST") {
         qDebug() << "we wrote back to ourselves like idiots";
     } else if (command == "STOP") {
-        clientSet.remove(qMakePair(sender, port));
+        m_clientSet.remove(qMakePair(sender, port));
         //the client decided to leave the game so we start broadcasting for a new client
-        broadcastTimer->start();
+        m_broadcastTimer->start();
     } else if (command == "UNDO") {
         emit undo();
     } else if (command == "HIT") {
@@ -82,7 +82,7 @@ void Server::broadcast()
 
 void Server::writeMessage(QByteArray data)
 {
-    for (auto pair: clientSet)
+    for (auto pair: m_clientSet)
     {
         m_socket->writeDatagram(data, pair.first, pair.second);
     }
@@ -90,6 +90,7 @@ void Server::writeMessage(QByteArray data)
 
 Server::~Server()
 {
+    if (m_broadcastTimer) delete m_broadcastTimer;
     if (m_socket) delete m_socket;
 }
 

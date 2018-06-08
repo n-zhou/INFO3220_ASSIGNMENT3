@@ -33,17 +33,17 @@ protected:
     /**
      * @brief display is used to display the host game
      */
-    ServerDisplay *display = nullptr;
+    ServerDisplay *m_display = nullptr;
 
     /**
      * @brief broadcastTimer the timer used to control how often a broadcast is sent
      */
-    QTimer *broadcastTimer = nullptr;
+    QTimer *m_broadcastTimer = nullptr;
 
     /**
      * @brief clientSet the set of clients that have acknoweledged our broadcast
      */
-    QSet<QPair<QHostAddress, quint16>> clientSet;
+    QSet<QPair<QHostAddress, quint16>> m_clientSet;
 
     friend class ServerGame;
 signals:

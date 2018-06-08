@@ -2,7 +2,7 @@
 
 ServerGame::ServerGame(PoolGame *game, ServerDisplay &display, Server &server) :
     PoolGame(*game),
-    m_socket(server.m_socket), m_ip(&server.clientSet), m_syncTimer(new QTimer()), m_pos(),
+    m_socket(server.m_socket), m_ip(&server.m_clientSet), m_syncTimer(new QTimer()), m_pos(),
     m_clicked(false), m_indexOfBall(-1), m_states(), m_originator()
 {
     connect(&display,&ServerDisplay::mousePressed,this,&ServerGame::mousePressed);
